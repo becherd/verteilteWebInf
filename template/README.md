@@ -1,7 +1,8 @@
 # Maven Template
+Maven should be pre-installed on many unix variants like Ubuntu, Debian, Mac OS X. Installer for Windows can be found [here](http://maven.apache.org/download.cgi)
 Simply copy this template folder for each new homework. Import the new (copied) folder as project in Eclipse or IntelliJ (see below) and start coding :D
 
-## CommandLine
+## Command line (for teacher)
 Compile and execute from command line with:
 ```
 mvn -q  package exec:java
