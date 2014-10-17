@@ -1,5 +1,5 @@
 # Maven Template
-Simply copy this template folder for each new homework
+Simply copy this template folder for each new homework. Import the new (copied) folder as project in Eclipse or IntelliJ (see below) and start coding :D
 
 ## CommandLine
 Compile and execute from command line with:
