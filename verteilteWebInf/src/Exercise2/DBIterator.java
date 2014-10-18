@@ -1,6 +1,9 @@
 package Exercise2;
 
+import java.util.ArrayList;
 
-public class DBIterator {
-    
+public interface DBIterator {
+    public ArrayList<String> open();
+    public ArrayList<Register> next();
+    void close();
 }
