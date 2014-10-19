@@ -7,12 +7,9 @@ import java.util.Arrays;
 
 public class TableScan implements DBIterator {
 
-    String filename;
-    int index;
-    BufferedReader reader;
-
-    ArrayList<String> attributeNames;
-    ArrayList<String> attributeTypes;
+    private String filename;
+    private BufferedReader reader;
+    private ArrayList<String> attributeTypes;
 
     public TableScan(String filename) {
         this.filename = filename;
@@ -30,9 +27,11 @@ public class TableScan implements DBIterator {
             attributeTypesArray = reader.readLine().split("\\t");
 
         } catch (Exception e) {
-                //todo
+            //todo
         }
-        attributeNames = new ArrayList(Arrays.asList(attributeNamesArray));
+        
+        //store attributeNames and attributeTypes into ArrayLists
+        ArrayList<String> attributeNames = new ArrayList(Arrays.asList(attributeNamesArray));
         attributeTypes = new ArrayList(Arrays.asList(attributeTypesArray));
 
         return attributeNames;
@@ -42,33 +41,35 @@ public class TableScan implements DBIterator {
     public ArrayList<Register> next() {
         String line = null;
         try {
-
+            //read next line
             line = reader.readLine();
 
         } catch (Exception e) {
-                //todo
+            //todo
         }
 
-        ArrayList<Register> attributesList = new ArrayList();
+        ArrayList<Register> tuple = null;
 
         if (line != null) {
             ArrayList<String> attributes;
 
+            //split the input string with tab as the delimiter
             attributes = new ArrayList(Arrays.asList(line.split("\\t")));
 
-            attributesList = new ArrayList();
+            tuple = new ArrayList();
             Register r;
             for (int i = 0; i < attributeTypes.size(); i++) {
                 r = fillRegister(attributes.get(i), attributeTypes.get(i));
-                attributesList.add(r);
+                tuple.add(r);
             }
         }
 
-        return attributesList;
+        return tuple;
     }
 
     /**
-     * Fills the register depending on given data tpye
+     * Fills the register depending on given data type
+     *
      * @param attribute the attribute to be put into the register
      * @param type the type to be used
      * @return the filled Register
@@ -94,7 +95,11 @@ public class TableScan implements DBIterator {
 
     @Override
     public void close() {
+        try {
+            reader.close();
+        } catch (Exception e) {
             //todo
+        }
     }
 
 }
