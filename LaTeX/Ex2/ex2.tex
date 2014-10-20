@@ -11,7 +11,13 @@
 \maketitle
 
 \section*{Aufgabe 1}
+\begin{enumerate}[label=\alph*)]
+\item Socket-basierte Kommunikation bringt einige Nachteile für verteilte Systeme mit sich. Zunächst ist ein Socket eine Zwei-Wege-Verbindung zwischen einem Client und einem Server. Parallelität bei verteilten Anwendungen muss also explizit vom Programmierer berücksichtigt werden, da Sockets per se keine Abstraktion / Transparenz für parallele Anwendungen liefern.  
+Bei der Verwendung von Datagram-Sockets welche Daten per UDP übertragen, muss (manuell) sichergestellt werden, dass die UDP Nachteile wie z.B. Packetloss ausgeglichen werden. Bei Sockets die eine TCP Verbindung aufbauen, muss der Verbindungsauf- und Abbau explizit programmiert werden. Bei verteilten Systemen muss die Verbindung zu jedem der beteiligten Server sichergestellt und überwacht werden. 
 
+\item
+\item
+\end{enumerate}
 
 \section*{Aufgabe 2}
 \begin{enumerate}[label=\alph*)]
