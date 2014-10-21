@@ -15,7 +15,8 @@
 \item Socket-basierte Kommunikation bringt einige Nachteile für verteilte Systeme mit sich. Zunächst ist ein Socket eine Zwei-Wege-Verbindung zwischen einem Client und einem Server. Parallelität bei verteilten Anwendungen muss also explizit vom Programmierer berücksichtigt werden, da Sockets per se keine Abstraktion / Transparenz für parallele Anwendungen liefern.  
 Bei der Verwendung von Datagram-Sockets welche Daten per UDP übertragen, muss (manuell) sichergestellt werden, dass die UDP Nachteile wie z.B. Packetloss ausgeglichen werden. Bei Sockets die eine TCP Verbindung aufbauen, muss der Verbindungsauf- und Abbau explizit programmiert werden. Bei verteilten Systemen muss die Verbindung zu jedem der beteiligten Server sichergestellt und überwacht werden. 
 
-\item
+\item \texttt{c++ -o server server.cpp -lzmq}, Server starten: \texttt{./server}\\
+\texttt{c++ -o client client.cpp  -lzmq}, Client starten: \texttt{./client 5678}
 
 \item ZeroMQ und ähnliche Systeme haben den Vorteil, dass sie einem Entwickler viel Zeit und Arbeit abnehmen könnnen. Bei verteilten Systemen kann es z.B. vorkommen, dass verschiedenen Systemen auch eine unterschiedliche Byte-Reihenfolge (Little vs. Big Endian) zugrunde liegt. Außerdem sind verteilte Systeme oft dynamisch aufgebaut, d.h. abhängig von den benötigten Ressourcen, werden mehr oder weniger Rechner bereitgestellt um die Last zu verarbeiten. ZeroMQ liefert bereits entsprechende Abstraktionen und Features wie Message Ques, um die Komplexität der genannten Dinge zu verstecken. Außerdem ist ZeroMQ ein etabliertes und funktionierendes System, mit dem Entwickler sich auf die Entwicklung ihrer eigentlichen Anwendung fokussieren können und nicht um den Overhead der Socket-Programmierung. Nachteil eines solchen Systems ist, dass man an den Hersteller gebunden ist und einen gewissen "Vendor Lock-In" hat.  
 
@@ -24,19 +25,28 @@ Bei der Verwendung von Datagram-Sockets welche Daten per UDP übertragen, muss (
 
 \section*{Aufgabe 2}
 \begin{enumerate}[label=\alph*)]
-%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%  Somebody please verify this solution :)  %%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%
-\item Einzelnes Tupel $t$ von A nach B übertragen: 
+\item $r$ Tupel $t$ von A nach B übertragen: 
 \[t_{A\rightarrow B} = \frac{r\cdot k_r}{b}+r\cdot l = r\left(\frac{k_r}{b} + l \right)\]
-Menge von Tupeln von B nach A übertragen:
-\[t_{B\rightarrow A} = \frac{s/j\cdot k_s}{b}+\frac{s}{j}\cdot l = \frac{s}{j}\left(\frac{k_s}{b} +l\right)\]
-$\Rightarrow$ \[t_{ges} = t_{A\rightarrow B} + t_{B\rightarrow A} =  r\left(\frac{k_r}{b} + l \right) +  \frac{s}{j}\left(\frac{k_s}{b} +l\right)\]
+Menge von Tupeln ($j$ Stück) von B nach A übertragen:
+\[t_{B\rightarrow A} = \frac{j\cdot k_s}{b}+r\cdot l\]
+$\Rightarrow$ \[t_{ges} = t_{A\rightarrow B} + t_{B\rightarrow A} =  r\left(\frac{k_r}{b} + l \right) + \frac{j\cdot k_s}{b}+r\cdot l\]
 
-\item
+\item \begin{itemize}
+\item  bei verteilten Systemen, bei denen nicht sämtliche Daten/die gesamte Relation übertragen wird (z.B. aus Datenschutzgründen)
+\item Join kann dadurch parallelisiert werden, allerdings Performanceverlust durch höhere Latenz
+\item Verbindung zweier autonome Systeme
+\end{itemize}
 \end{enumerate}
 
 \section*{Aufgabe 3}
+\begin{enumerate}[label=\alph*)]
+
+\item Man könnte dem Joinoperator noch die Joinbedingung übergeben. Dadurch sind nicht nur natürliche Joins möglich (sondern allgemeine Joins).
+\item \begin{itemize}
+\item Vorteil: geteilte Arbeit
+\item  Nachteil: langsamer aufgrund langsamer Kommunikation
+\end{itemize}
+\end{enumerate}
 
 \end{document}
 
