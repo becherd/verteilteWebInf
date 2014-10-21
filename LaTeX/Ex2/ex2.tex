@@ -16,7 +16,10 @@
 Bei der Verwendung von Datagram-Sockets welche Daten per UDP übertragen, muss (manuell) sichergestellt werden, dass die UDP Nachteile wie z.B. Packetloss ausgeglichen werden. Bei Sockets die eine TCP Verbindung aufbauen, muss der Verbindungsauf- und Abbau explizit programmiert werden. Bei verteilten Systemen muss die Verbindung zu jedem der beteiligten Server sichergestellt und überwacht werden. 
 
 \item
-\item
+
+\item ZeroMQ und ähnliche Systeme haben den Vorteil, dass sie einem Entwickler viel Zeit und Arbeit abnehmen könnnen. Bei verteilten Systemen kann es z.B. vorkommen, dass verschiedenen Systemen auch eine unterschiedliche Byte-Reihenfolge (Little vs. Big Endian) zugrunde liegt. Außerdem sind verteilte Systeme oft dynamisch aufgebaut, d.h. abhängig von den benötigten Ressourcen, werden mehr oder weniger Rechner bereitgestellt um die Last zu verarbeiten. ZeroMQ liefert bereits entsprechende Abstraktionen und Features wie Message Ques, um die Komplexität der genannten Dinge zu verstecken. Außerdem ist ZeroMQ ein etabliertes und funktionierendes System, mit dem Entwickler sich auf die Entwicklung ihrer eigentlichen Anwendung fokussieren können und nicht um den Overhead der Socket-Programmierung. Nachteil eines solchen Systems ist, dass man an den Hersteller gebunden ist und einen gewissen "Vendor Lock-In" hat.  
+
+
 \end{enumerate}
 
 \section*{Aufgabe 2}
