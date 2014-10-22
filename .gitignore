@@ -6,4 +6,5 @@
 *.DS_Store
 *.swp
 *.out
+*.netbeans_automatic_build
 /nbproject/private/
