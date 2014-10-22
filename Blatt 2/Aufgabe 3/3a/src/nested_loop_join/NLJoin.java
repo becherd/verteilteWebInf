@@ -1,16 +1,19 @@
 package nested_loop_join;
 
+import java.util.ArrayList;
+
 public class NLJoin implements DBIterator{
 
 	private DBIterator left, right;
-	private int key_left = -1, key_right = -1;
+        private ArrayList<Integer> join_keys_left = new ArrayList();
+        private ArrayList<Integer> join_keys_right = new ArrayList();
 	private int len_left = 0, len_right = 0;
 	private Register[] last_opened_left;
 	
 	public NLJoin(DBIterator left, DBIterator right){
 		this.left = left;
-		this.right = right;
-	}
+		this.right = right;	
+        }
 	
 	@Override
 	public String[] open(){
@@ -19,27 +22,19 @@ public class NLJoin implements DBIterator{
 		this.len_left = header_left.length;
 		String[] header_right = right.open();
 		this.len_right = header_right.length;
-		int anz = 0;
+		
+    
 		//Join-Attribut herausfinden
 		for(int i=0; i<this.len_left; i++){
 			for(int j=0; j<this.len_right; j++){
 				if(header_left[i].equals(header_right[j])){
-					key_left = i;
-					key_right = j;
-					anz++;
+					join_keys_left.add(i);
+					join_keys_right.add(j);  
 				}
 			}
+                         
 		}
-		//Uneindeutigkeit bzgl. des zu joinenden Felds
-		if(anz>1){
-			Exception exception = new Exception("Die Zuordnung der Felder ist nicht eindeutig!");
-			try {
-				throw exception;
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.exit(1);
-			}
-		}
+		
 		//Header-Namen konkatenieren
 		String header_new[] = new String[header_left.length + header_right.length];
 		int i=0;
@@ -57,13 +52,20 @@ public class NLJoin implements DBIterator{
 
 	@Override
 	public Register[] next() {
-		if(key_left >= 0 && key_right >=0){
+		if(!join_keys_left.isEmpty() && !join_keys_right.isEmpty()){
 			Register[] next_left = this.last_opened_left;
+                        boolean tuplesJoin;
 			while(next_left != null){
 				Register[] next_right = this.right.next();
-				while(next_right != null){					
+				while(next_right != null){
+                                        tuplesJoin=true;
+                                        for(int i=0; i<join_keys_left.size(); i++){
+                                            if(!next_right[join_keys_right.get(i)].equals(next_left[join_keys_left.get(i)])){
+                                                tuplesJoin=false;
+                                            }
+                                        }
 					//bei Gleichheit zurück geben
-					if(next_right[key_right].equals(next_left[key_left])){
+					if(tuplesJoin){
 						//Zeilen zusammen in ein Array kopieren
 						Register[] join = new Register[len_right+len_left];
 						int k=0;
