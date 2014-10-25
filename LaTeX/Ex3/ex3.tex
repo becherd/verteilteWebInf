@@ -1,0 +1,48 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ifsym}
+
+
+
+\author{Gruppe 6}
+
+\title{\textbf{VerteilteWebInf Hausaufgabe 3}}
+\date{\today}
+
+
+
+\newcommand{\LeftSemiJoin}{\textbf{\tiny \textifsym{|><}}}
+\newcommand{\RightSemiJoin}{\textbf{\tiny	 \textifsym{><|}}}
+
+\begin{document}
+\maketitle
+
+
+\section*{Aufgabe 1}
+\begin{itemize}
+\item $R \Join S = R \Join  (\Pi_C(R) \RightSemiJoin S)$\\
+\item $R \Join S =  (\Pi_C(S) \RightSemiJoin R) \Join  (\Pi_C(R) \RightSemiJoin S)$\\
+\end{itemize}
+
+
+\section*{Aufgabe 2}
+\begin{enumerate}[label=\alph*)]
+
+\item $R_1=\{[\underline{id:integer}, TokenID:bigint]\}$\\
+			$R_2=\{[\underline{id:integer}, CustomerID:integer]\}$\\
+			$R_3=\{[\underline{id:integer}, StoreID:integer]\}$\\
+			$R_4=\{[\underline{id:integer}, amount:numeric(7,2)]\}$\\
+			$R_5=\{[\underline{id:integer}, time:timestamp]\}$
+
+
+\end{enumerate}
+
+
+
+\end{document}
+
+
