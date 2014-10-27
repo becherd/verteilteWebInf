@@ -24,15 +24,11 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<artifactId>maven-jar-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.3.2</version>
 				<configuration>
-					<archive>
-			          <manifest>
-			            <addClasspath>true</addClasspath>
-			            <classpathPrefix>lib/</classpathPrefix>
-						<mainClass>column_store_3.Main</mainClass>
-					  </manifest>
-        			</archive>
+					<mainClass>column_store_3.Main</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>

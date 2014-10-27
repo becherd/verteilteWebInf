@@ -1,13 +1,4 @@
-/home/barbara/workspace_eclipse/VWIS/src/verteilter_nested_loop_join/ClientProxy.java
-/home/barbara/workspace_eclipse/VWIS/src/column_store_3/Row.java
-/home/barbara/workspace_eclipse/VWIS/src/nested_loop_join/Main.java
-/home/barbara/workspace_eclipse/VWIS/src/verteilter_nested_loop_join/Main_Server.java
-/home/barbara/workspace_eclipse/VWIS/src/column_store_3/Main.java
-/home/barbara/workspace_eclipse/VWIS/src/verteilter_nested_loop_join/Main.java
-/home/barbara/workspace_eclipse/VWIS/src/column_store_3/TransactionsColumn.java
-/home/barbara/workspace_eclipse/VWIS/src/nested_loop_join/Register.java
-/home/barbara/workspace_eclipse/VWIS/src/column_store_3/TransactionsRows.java
-/home/barbara/workspace_eclipse/VWIS/src/nested_loop_join/DBIterator.java
-/home/barbara/workspace_eclipse/VWIS/src/nested_loop_join/NLJoin.java
-/home/barbara/workspace_eclipse/VWIS/src/nested_loop_join/Tablescan.java
-/home/barbara/workspace_eclipse/VWIS/src/verteilter_nested_loop_join/ServerProxy.java
+/home/barbara/Dokumente/VWIS/github/verteilteWebInf/Blatt 3/Aufgabe 2/src/column_store_3/Main.java
+/home/barbara/Dokumente/VWIS/github/verteilteWebInf/Blatt 3/Aufgabe 2/src/column_store_3/TransactionsColumn.java
+/home/barbara/Dokumente/VWIS/github/verteilteWebInf/Blatt 3/Aufgabe 2/src/column_store_3/TransactionsRows.java
+/home/barbara/Dokumente/VWIS/github/verteilteWebInf/Blatt 3/Aufgabe 2/src/column_store_3/Row.java
