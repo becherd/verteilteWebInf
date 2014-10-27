@@ -8,3 +8,4 @@
 *.out
 *.netbeans_automatic_build
 /nbproject/private/
+/Blatt 3/target/

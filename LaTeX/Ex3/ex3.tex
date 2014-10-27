@@ -25,7 +25,27 @@
 \section*{Aufgabe 1}
 \begin{itemize}
 \item $R \Join S = R \Join  (\Pi_C(R) \RightSemiJoin S)$\\
+
+$"\Rightarrow"$ \\
+$\forall t \in R \Join S: \exists t_1 \in R \land \exists t_2 \in S (t_1.C = t_2.C)$\\
+$\Rightarrow t_2 \in (\Pi_C(R) \RightSemiJoin S) \Rightarrow t_1 \Join t_2 \Rightarrow t \in (R \Join (\Pi_C(R) \RightSemiJoin S))$, da  die Joinbedingung nur das Attribut C enthält.\\
+Man erhält damit alle möglichen Joinpartner der Relation S zur Relation R. \\
+$"\Leftarrow"$\\
+$\forall t \in R \Join (\Pi_C(R) \RightSemiJoin S): \exists t_1 \in R \land \exists t_2 \in \Pi_C(R) \RightSemiJoin S (t_1.C = t_2.C)$\\
+$\Rightarrow t_2 \in S \Rightarrow t_1 \Join t_2 \Rightarrow t \in R \Join S $\\
+
 \item $R \Join S =  (\Pi_C(S) \RightSemiJoin R) \Join  (\Pi_C(R) \RightSemiJoin S)$\\
+
+$"\Rightarrow"$ \\
+$\forall t \in R \Join S: \exists t_1 \in R \land \exists t_2 \in S (t_1.C = t_2.C)$\\
+$\Rightarrow t_1 \in (\Pi_C(S) \RightSemiJoin R) \land t_2 \in (\Pi_C(R) \RightSemiJoin S)$ \\
+$\Rightarrow t_1 \Join t_2 \Rightarrow t \in ((\Pi_C(S) \RightSemiJoin R) \Join (\Pi_C(R) \RightSemiJoin S))$, da  die Joinbedingung nur das Attribut C enthält.\\
+Auf der linken Seite des Joins erhält man somit alle Joinpartner von R  für S, auf der rechten Seite alle Joinpartner von S für R.\\
+$"\Leftarrow"$\\
+$\forall t \in (\Pi_C(S) \RightSemiJoin R) \Join (\Pi_C(R) \RightSemiJoin S): \exists t_1 \in (\Pi_C(S) \RightSemiJoin R) \land \exists t_2 \in \Pi_C(R) \RightSemiJoin S (t_1.C = t_2.C)$\\
+$\Rightarrow t_1\in R \land t_2 \in S \Rightarrow t_1 \Join t_2 \Rightarrow t \in R \Join S $\\
+
+
 \end{itemize}
 
 
@@ -37,7 +57,10 @@
 			$R_3=\{[\underline{id:integer}, StoreID:integer]\}$\\
 			$R_4=\{[\underline{id:integer}, amount:numeric(7,2)]\}$\\
 			$R_5=\{[\underline{id:integer}, time:timestamp]\}$
-
+%set to f)
+\setcounter{enumi}{5}
+\item 3 Mio Datensätze: Column Store: 10936 ms \\
+			Row Store: 12476 ms
 
 \end{enumerate}
 
