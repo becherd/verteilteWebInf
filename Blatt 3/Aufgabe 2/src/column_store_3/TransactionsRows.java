@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 
 public class TransactionsRows {
+
 	ArrayList<Row> rows;
 	
 	public TransactionsRows(){
@@ -38,8 +39,9 @@ public Object[] statistikNTage(int tage){
 	ArrayList<BigInteger> res_count = new ArrayList<BigInteger>();
 	ArrayList<BigInteger> res_sum = new ArrayList<BigInteger>();
 	long unixTime = System.currentTimeMillis() / 1000L;
+  long timestamp = 24*3600*tage;
 	for(int i=0; i<this.rows.size(); i++){
-		if(unixTime - this.rows.get(i).getTimestamp() < 24*3600*tage){
+		if(unixTime - this.rows.get(i).getTimestamp() < timestamp){
 			//in Statisik aufnehmen
 			if(res_storeID.contains(this.rows.get(i).getStoreID())){
 				//StoreID schon einmal aufgetreten
