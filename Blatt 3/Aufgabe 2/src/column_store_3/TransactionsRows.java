@@ -2,6 +2,7 @@ package column_store_3;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TransactionsRows {
 
@@ -38,27 +39,32 @@ public Object[] statistikNTage(int tage){
 	ArrayList<Integer> res_storeID = new ArrayList<Integer>();
 	ArrayList<BigInteger> res_count = new ArrayList<BigInteger>();
 	ArrayList<BigInteger> res_sum = new ArrayList<BigInteger>();
+  HashMap<Integer, Integer> storeToIndexMap = new HashMap<>();
 	long unixTime = System.currentTimeMillis() / 1000L;
   long timestamp = 24*3600*tage;
-	for(int i=0; i<this.rows.size(); i++){
-		if(unixTime - this.rows.get(i).getTimestamp() < timestamp){
+  int i = 0;
+	for(Row row : rows){
+		if(unixTime - row.getTimestamp() < timestamp){
 			//in Statisik aufnehmen
-			if(res_storeID.contains(this.rows.get(i).getStoreID())){
+      Integer index = storeToIndexMap.get(row.getStoreID());
+			if(index != null){
 				//StoreID schon einmal aufgetreten
-				int index = res_storeID.indexOf(this.rows.get(i).getStoreID());
-				res_count.set(index, res_count.get(index).add(new BigInteger("1")));
-				res_sum.set(index, res_sum.get(index).add(new BigInteger(""+this.rows.get(i).getAmount())));
+				int unboxedIndex = index;
+				res_count.set(unboxedIndex, res_count.get(unboxedIndex).add(new BigInteger("1")));
+				res_sum.set(index, res_sum.get(unboxedIndex).add(new BigInteger(""+row.getAmount())));
 			}else{
 				//StoreID neu
-				res_storeID.add(this.rows.get(i).getStoreID());
+				res_storeID.add(row.getStoreID());
 				res_count.add(new BigInteger("1"));
-				res_sum.add(new BigInteger(""+this.rows.get(i).getAmount()));
+				res_sum.add(new BigInteger(""+row.getAmount()));
+        storeToIndexMap.put(row.getStoreID(), i);
+        i++;
 			}
 		}
 	}
 	//print out
 	System.out.println("StoreID \t count(customerID) \t sum(amount)");
-	for(int i=0; i<res_storeID.size(); i++){
+	for(i=0; i<res_storeID.size(); i++){
 		System.out.println(res_storeID.get(i) + "\t\t" + res_count.get(i) + "\t\t\t" + res_sum.get(i));
 	}
 	Object[] ret = {res_storeID, res_count, res_sum};
