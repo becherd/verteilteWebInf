@@ -9,3 +9,6 @@
 *.netbeans_automatic_build
 /nbproject/private/
 /Blatt 3/target/
+*.iml
+*.idea/
+Blatt 3/Aufgabe 2/3m.txt
