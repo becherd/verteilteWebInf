@@ -46,7 +46,7 @@ public class TransactionsColumn {
 		WHERE now() - timestamp < 2592000
 		GROUP BY StoreID
 	 */
-	public Object[] statistikNTage(int tage){
+	public QueryResult statistikNTage(int tage){
 		
 		ArrayList<Integer> res_storeID = new ArrayList<Integer>();
 		ArrayList<BigInteger> res_count = new ArrayList<BigInteger>();
@@ -77,13 +77,8 @@ public class TransactionsColumn {
 				}
 			}
 		}
-		//print out
-		System.out.println("StoreID \t count(customerID) \t sum(amount)");
-		for(int i=0; i<res_storeID.size(); i++){
-			System.out.println(res_storeID.get(i) + "\t\t" + res_count.get(i) + "\t\t\t" + res_sum.get(i));
-		}
-		Object[] ret = {res_storeID, res_count, res_sum};
-		return ret;
+
+		return new QueryResult(res_storeID, res_count, res_sum);
 	}
 	
 	@Override

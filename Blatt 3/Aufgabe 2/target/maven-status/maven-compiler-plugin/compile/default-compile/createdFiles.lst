@@ -1,4 +1,7 @@
 column_store_3/TransactionsRows.class
-column_store_3/Main.class
 column_store_3/TransactionsColumn.class
+column_store_3/TransactionsRows$TreeComparator.class
+column_store_3/Main.class
+column_store_3/QueryResult.class
+column_store_3/TransactionsRows$1.class
 column_store_3/Row.class

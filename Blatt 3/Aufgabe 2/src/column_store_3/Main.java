@@ -7,8 +7,11 @@ import java.math.BigInteger;
 
 public class Main {
 	
-	public static void main(String[] args) {		
-		//import data 
+	public static void main(String[] args) {
+
+    //
+		//import data
+    //
 		TransactionsColumn columnstore = new TransactionsColumn();
 		TransactionsRows rowstore = new TransactionsRows();
 		BufferedReader br;
@@ -24,33 +27,62 @@ public class Main {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+    //
+    // Column Store
+    //
+
 		System.out.println("Column Store:");
 		//init Timer
 		long time_start = System.currentTimeMillis();
-		//Teilaufgabe b
-		System.out.println("Anzahl der abgewickelten Transaktionen in den letzten 30 Tagen: " + columnstore.getAnzahlLetzteNTage(30));
+    //Teilaufgabe b
+		int countColumnStore = columnstore.getAnzahlLetzteNTage(30);;
 		//Teilaufgabe c
-		System.out.println("Statistiken über Umsatz und Anzahl der Kunden pro Geschäft in den letzten 30 Tagen:");
-		columnstore.statistikNTage(30);
+		QueryResult colRes = columnstore.statistikNTage(30);
 		long time_columnstore = System.currentTimeMillis()-time_start;
+
+
+    System.out.println("Anzahl der abgewickelten Transaktionen in den letzten 30 Tagen: "+countColumnStore);
+    System.out.println("Statistiken über Umsatz und Anzahl der Kunden pro Geschäft in den letzten 30 Tagen:");
+    colRes.print();
+
 		System.out.println("");
 		System.out.println("----------------------------------------- \nRow Store:");
+
+
+    //
+    // RowStore
+    //
+
 		time_start = System.currentTimeMillis();
+
 		//Teilaufgabe b
-		System.out.println("Anzahl der abgewickelten Transaktionen in den letzten 30 Tagen: " + rowstore.getAnzahlLetzteNTage(30));
+    int countRowStore = rowstore.getAnzahlLetzteNTage(30);
+
 		//Teilaufgabe c
-		System.out.println("Statistiken über Umsatz und Anzahl der Kunden pro Geschäft in den letzten 30 Tagen:");
-		rowstore.statistikNTage(30);
+		QueryResult statsRowStore = rowstore.statistikNTage(30);
+    long time_end = System.currentTimeMillis();
+
+
+    System.out.println("Anzahl der abgewickelten Transaktionen in den letzten 30 Tagen: "+countRowStore);
+    System.out.println("Statistiken über Umsatz und Anzahl der Kunden pro Geschäft in den letzten 30 Tagen:");
+    statsRowStore.print();
+
+
+    //
+    // Benchmarking results
+    //
+
 		System.out.println("");
 		System.out.println("\n-> Column Store: " + time_columnstore + " Millisekunden");
-		System.out.println("\n-> Row Store: " + (System.currentTimeMillis()-time_start) + " Millisekunden");
+		System.out.println("\n-> Row Store: " + (time_end-time_start) + " Millisekunden");
 		
 	}
 
 	/*
 	 * Ergebnis mit 3 Mio. Datensätzen: 
-	 * Column Store: 10936 Millisekunden
-	 * Row Store: 12476 Millisekunden
+	 * Column Store: 304 Millisekunden
+	 * Row Store: 325 Millisekunden
 	 * */
 	
 }
