@@ -9,7 +9,7 @@ public class TransactionsColumn {
 	ArrayList<Integer> storeID;
 	ArrayList<Integer> amount;
 	ArrayList<Long> timestamp;
-	
+
 	public TransactionsColumn(){
 		this.tokenID = new ArrayList<BigInteger>();
 		this.customerID = new ArrayList<Integer>();
@@ -50,19 +50,40 @@ public class TransactionsColumn {
 		ArrayList<Integer> res_storeID = new ArrayList<Integer>();
 		ArrayList<BigInteger> res_count = new ArrayList<BigInteger>();
 		ArrayList<BigInteger> res_sum = new ArrayList<BigInteger>();
+        ArrayList<Integer> res_customerID = new ArrayList<>();
+
 		long unixTime = System.currentTimeMillis() / 1000L;
-		for(int i=0; i<this.customerID.size(); i++){
-			if(unixTime - this.timestamp.get(i) < 24*3600*tage){
+        int custSize = this.customerID.size();
+        int preCalcTime = 24*3600*tage;
+        boolean distinctCustomerIDAdd = false;
+
+		for(int i=0; i<custSize; i++){
+
+			if(unixTime - this.timestamp.get(i) < preCalcTime){
+
 				//in Statisik aufnehmen
 				if(res_storeID.contains(this.storeID.get(i))){
+
+                    // Check ob customer id bereits enthalten ist
+                    if(res_customerID.contains(this.customerID.get(i))) {
+                        distinctCustomerIDAdd = false;
+                    } else {
+                        res_customerID.add(this.customerID.get(i));
+                        distinctCustomerIDAdd = true;
+                    }
+
 					//StoreID schon einmal aufgetreten
 					int index = res_storeID.indexOf(this.storeID.get(i));
-					res_count.set(index, res_count.get(index).add(new BigInteger("1")));
+                    if(distinctCustomerIDAdd) {
+                        System.out.println("NOW");
+                        res_count.set(index, res_count.get(index).add(new BigInteger("1")));
+                    }
 					res_sum.set(index, res_sum.get(index).add(new BigInteger(""+this.amount.get(i))));
 				}else{
 					//StoreID neu
 					res_storeID.add(this.storeID.get(i));
-					res_count.add(new BigInteger("1"));
+                    res_count.add(new BigInteger("1"));
+                    res_customerID.add(this.customerID.get(i));
 					res_sum.add(new BigInteger(""+this.amount.get(i)));
 				}
 			}
