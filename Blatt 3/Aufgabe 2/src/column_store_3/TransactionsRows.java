@@ -2,15 +2,13 @@ package column_store_3;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.TreeSet;
 
 public class TransactionsRows {
   /**
    * Sort the rows according timestamp.
    * It's some kind of simple database index
-   */
+
   private static class TreeComparator implements Comparator<Row> {
     @Override public int compare(Row o1, Row o2) {
       if (o1.getTimestamp() < o2.getTimestamp()) {
@@ -22,13 +20,14 @@ public class TransactionsRows {
       return 0; // equal
     }
   }
+   */
 
-  TreeSet<Row> rows;
-  //ArrayList<Row> rows;
+  //TreeSet<Row> rows;
+  ArrayList<Row> rows;
 
   public TransactionsRows() {
-    //rows = new ArrayList<Row>();
-    rows = new TreeSet<>(new TreeComparator());
+    rows = new ArrayList<Row>();
+    //rows = new TreeSet<>(new TreeComparator());
   }
 
   public void add(Row row) {
@@ -46,7 +45,7 @@ public class TransactionsRows {
         anz++;
       } else {
         // Entries are sorted and hence there are no more rows in the list that match criteria
-        break;
+        //break;
       }
     }
     return anz;
@@ -84,7 +83,7 @@ public class TransactionsRows {
           i++;
         }
       } else {
-        break;
+        //break;
       }
     }
 

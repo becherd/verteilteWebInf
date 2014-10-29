@@ -81,8 +81,8 @@ public class Main {
 
 	/*
 	 * Ergebnis mit 3 Mio. Datensätzen: 
-	 * Column Store: 304 Millisekunden
-	 * Row Store: 325 Millisekunden
+	 * Column Store: 434 Millisekunden
+	 * Row Store: 330 Millisekunden
 	 * */
 	
 }
