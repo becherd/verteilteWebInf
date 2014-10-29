@@ -2,6 +2,7 @@ package column_store_3;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TransactionsColumn {
 	ArrayList<BigInteger> tokenID;
@@ -50,20 +51,29 @@ public class TransactionsColumn {
 		ArrayList<Integer> res_storeID = new ArrayList<Integer>();
 		ArrayList<BigInteger> res_count = new ArrayList<BigInteger>();
 		ArrayList<BigInteger> res_sum = new ArrayList<BigInteger>();
+    HashMap<Integer, Integer> storeToIndexMap = new HashMap<>();
 		long unixTime = System.currentTimeMillis() / 1000L;
+    long timestamp = 24*3600*tage;
+
+    int j = 0;
+
 		for(int i=0; i<this.customerID.size(); i++){
-			if(unixTime - this.timestamp.get(i) < 24*3600*tage){
+			if(unixTime - this.timestamp.get(i) < timestamp){
 				//in Statisik aufnehmen
-				if(res_storeID.contains(this.storeID.get(i))){
+        Integer index = storeToIndexMap.get(storeID.get(i));
+				if(index != null){
 					//StoreID schon einmal aufgetreten
-					int index = res_storeID.indexOf(this.storeID.get(i));
-					res_count.set(index, res_count.get(index).add(new BigInteger("1")));
-					res_sum.set(index, res_sum.get(index).add(new BigInteger(""+this.amount.get(i))));
+					int unboxedIndex = index;
+					res_count.set(unboxedIndex, res_count.get(unboxedIndex).add(new BigInteger("1")));
+					res_sum.set(unboxedIndex, res_sum.get(unboxedIndex).add(new BigInteger(""+this.amount.get(i))));
 				}else{
 					//StoreID neu
-					res_storeID.add(this.storeID.get(i));
+          int storeId = this.storeID.get(i);
+					res_storeID.add(storeId);
 					res_count.add(new BigInteger("1"));
-					res_sum.add(new BigInteger(""+this.amount.get(i)));
+					res_sum.add(new BigInteger(""+this.amount.get(j)));
+          storeToIndexMap.put(storeId, j);
+          j++;
 				}
 			}
 		}
