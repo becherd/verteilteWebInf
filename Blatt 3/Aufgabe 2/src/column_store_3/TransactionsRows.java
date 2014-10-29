@@ -3,6 +3,7 @@ package column_store_3;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class TransactionsRows {
   /**
@@ -61,7 +62,10 @@ public class TransactionsRows {
     ArrayList<Integer> res_storeID = new ArrayList<Integer>();
     ArrayList<BigInteger> res_count = new ArrayList<BigInteger>();
     ArrayList<BigInteger> res_sum = new ArrayList<BigInteger>();
+    // helper for performance
     HashMap<Integer, Integer> storeToIndexMap = new HashMap<>();
+    HashSet<Integer> distinctCustomers = new HashSet<>();
+
     long unixTime = System.currentTimeMillis() / 1000L;
     long timestamp = 24 * 3600 * tage;
     int i = 0;
@@ -72,14 +76,18 @@ public class TransactionsRows {
         if (index != null) {
           //StoreID schon einmal aufgetreten
           int unboxedIndex = index;
-          res_count.set(unboxedIndex, res_count.get(unboxedIndex).add(new BigInteger("1")));
+          if (!distinctCustomers.contains(row.getCustomerID())) {
+            res_count.set(unboxedIndex, res_count.get(unboxedIndex).add(new BigInteger("1")));
+          }
           res_sum.set(index, res_sum.get(unboxedIndex).add(new BigInteger("" + row.getAmount())));
+
         } else {
           //StoreID neu
           res_storeID.add(row.getStoreID());
           res_count.add(new BigInteger("1"));
           res_sum.add(new BigInteger("" + row.getAmount()));
           storeToIndexMap.put(row.getStoreID(), i);
+          distinctCustomers.add(row.getCustomerID());
           i++;
         }
       } else {

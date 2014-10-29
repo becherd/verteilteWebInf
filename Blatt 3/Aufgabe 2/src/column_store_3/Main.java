@@ -39,7 +39,7 @@ public class Main {
 		int countColumnStore = columnstore.getAnzahlLetzteNTage(30);;
 		//Teilaufgabe c
 		QueryResult colRes = columnstore.statistikNTage(30);
-		long time_columnstore = System.currentTimeMillis()-time_start;
+		long timeColumnstore = System.currentTimeMillis()-time_start;
 
 
     System.out.println("Anzahl der abgewickelten Transaktionen in den letzten 30 Tagen: "+countColumnStore);
@@ -61,7 +61,7 @@ public class Main {
 
 		//Teilaufgabe c
 		QueryResult statsRowStore = rowstore.statistikNTage(30);
-    long time_end = System.currentTimeMillis();
+    long timeEndRowStore = System.currentTimeMillis();
 
 
     System.out.println("Anzahl der abgewickelten Transaktionen in den letzten 30 Tagen: "+countRowStore);
@@ -74,15 +74,15 @@ public class Main {
     //
 
 		System.out.println("");
-		System.out.println("\n-> Column Store: " + time_columnstore + " Millisekunden");
-		System.out.println("\n-> Row Store: " + (time_end-time_start) + " Millisekunden");
+		System.out.println("\n-> Column Store: " + timeColumnstore + " Millisekunden");
+		System.out.println("\n-> Row Store: " + (timeEndRowStore-time_start) + " Millisekunden");
 		
 	}
 
 	/*
 	 * Ergebnis mit 3 Mio. Datensätzen: 
-	 * Column Store: 434 Millisekunden
-	 * Row Store: 330 Millisekunden
+	 * Column Store: 510 Millisekunden
+	 * Row Store: 398 Millisekunden
 	 * */
 	
 }

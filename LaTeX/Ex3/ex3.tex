@@ -45,6 +45,20 @@ $"\Leftarrow"$\\
 $\forall t \in (\Pi_C(S) \RightSemiJoin R) \Join (\Pi_C(R) \RightSemiJoin S): \exists t_1 \in (\Pi_C(S) \RightSemiJoin R) \land \exists t_2 \in \Pi_C(R) \RightSemiJoin S (t_1.C = t_2.C)$\\
 $\Rightarrow t_1\in R \land t_2 \in S \Rightarrow t_1 \Join t_2 \Rightarrow t \in R \Join S $\\
 
+\item 
+
+Anderer Ansatz für a)
+\\
+Es gilt: \\
+$S \RightSemiJoin R = \Pi_{s_1 \ldots s_n}(R \Join S)$ mit $s_1 \ldots s_n$ sind alle Attribute von S.
+\\
+Damit gilt:
+\\
+$R \Join S = R \Join  (\Pi_C(R) \RightSemiJoin S) = R \Join \Pi_{s_1 \ldots s_n}(S \Join \Pi_{C}(R)) $
+
+
+
+
 
 \end{itemize}
 
