@@ -18,7 +18,7 @@ public class Main {
 		String strLine;
 		String[] aryLine;
 		try {
-			br = new BufferedReader(new FileReader("3m.txt"));
+			br = new BufferedReader(new FileReader("import.txt"));
 			while((strLine = br.readLine()) != null){
 				aryLine = strLine.split("\t");
 				columnstore.add(new BigInteger(aryLine[0]), Integer.parseInt(aryLine[1]), Integer.parseInt(aryLine[2]), Integer.parseInt(aryLine[3]), Long.parseLong(aryLine[4]));
