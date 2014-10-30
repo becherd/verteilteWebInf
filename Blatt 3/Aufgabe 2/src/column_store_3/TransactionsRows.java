@@ -78,6 +78,7 @@ public class TransactionsRows {
           int unboxedIndex = index;
           if (!distinctCustomers.contains(row.getCustomerID())) {
             res_count.set(unboxedIndex, res_count.get(unboxedIndex).add(new BigInteger("1")));
+            distinctCustomers.add(row.getCustomerID());
           }
           res_sum.set(index, res_sum.get(unboxedIndex).add(new BigInteger("" + row.getAmount())));
 
