@@ -1,0 +1,102 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{ifsym}
+
+
+
+\author{Gruppe 6}
+
+\title{\textbf{VerteilteWebInf Hausaufgabe 4}}
+\date{\today}
+
+
+
+%\newcommand{\LeftSemiJoin}{\textbf{\tiny \textifsym{|><}}}
+%\newcommand{\RightSemiJoin}{\textbf{\tiny	 \textifsym{><|}}}
+
+\begin{document}
+\maketitle
+
+\section*{Aufgabe 1}
+TODO
+
+
+
+\section*{Aufgabe 2}
+\textbf{Prädikat $ A_1 $}:\\
+$ Q' = \{ A_1 \}, M(Q') = \{ A_1^+, A_1^-\} $\\
+$ F(Q') = \{ AbtNr\leq 250, AbtNr>250\} $\\
+ja, es gibt eine wesentliche Verbesserung und noch keine unnötige Partitionierung, also $ Q = \{ A_1 \} $\\
+\\
+\textbf{Prädikat $ A_2 $}:\\
+$ Q' = \{ A_1, A_2 \}, M(Q') = \{ A_1^+ A_2^+, A_1^+ A_2^-, A_1^- A_2^+, A_1^- A_2^-\} $\\
+kurz: $ M(Q') = \{ A_1^+, A_2^+, A_1^- A_2^-\} $\\
+$ F(Q') = \{ AbtNr\leq 250, AbtNr>250 \wedge AbtNr \leq 400, AbtNr > 400 \} $\\
+ja, es gibt eine wesentliche Verbesserung, also $ Q = \{ A_1, A_2 \} $ \\
+\textit{unnötige Partitionierung} bzgl. $ A_1 $?: mit $ A_1 $ in Q wesentliche Verbesserung, also keine unnötige Partitionierung\\
+\\
+\textbf{Prädikat $ A_3 $}:\\
+$ Q' = \{ A_1, A_2, A_3 \}, \\
+M(Q') = \{ A_1^+ A_2^+ A_3^+, A_1^+ A_2^- A_3^+, A_1^- A_2^+ A_3^+, A_1^- A_2^- A_3^+, A_1^+ A_2^+ A_3^-, A_1^+ A_2^- A_3^-, A_1^- A_2^+ A_3^-, A_1^- A_2^- A_3^-\} $\\
+kurz: $ M(Q') = \{ A_1^+, A_2^+, A_3^+ \} $\\
+$ F(Q') = \{ AbtNr\leq 250, AbtNr>250 \wedge AbtNr \leq 400, AbtNr > 400 \} $\\
+nein, es gibt keine wesentliche Verbesserung, also bleibt $ Q = \{ A_1, A_2 \} $ \\
+\\
+\textbf{Prädikat $ A_4 $}:\\
+$ Q' = \{ A_1, A_2, A_4 \}, \\
+M(Q') = \{ A_1^+ A_2^+ A_4^+, A_1^+ A_2^- A_4^+, A_1^- A_2^+ A_4^+, A_1^- A_2^- A_4^+, A_1^+ A_2^+ A_4^-, A_1^+ A_2^- A_4^-, A_1^- A_2^+ A_4^-, A_1^- A_2^- A_4^-\} $\\
+kurz: $ M(Q') = \{ A_1^+ A_4^+, A_1^+ A_4^-, A_2^+, A_1^- A_2^-\} $\\
+$ F(Q') = \{ AbtNr\leq 150, AbtNr >150 \wedge AbtNr \leq 250, AbtNr>250 \wedge AbtNr \leq 400, AbtNr > 400 \} $\\
+ja, es gibt eine wesentliche Verbesserung, also $ Q = \{ A_1, A_2, A_4 \} $ \\
+\textit{unnötige Partitionierung} bzgl. $ A_1 $?: \\
+$ Q' = \{A_2, A_4) \}, M(Q') = \{ A_2^+ A_4^+, A_2^+ A_4^-, A_2^- A_4^+, A_2^- A_4^- \} $\\
+$ F(Q') = \{ AbtNr\leq 150, (AbtNr >150 \wedge AbtNr \leq 250) \vee (AbtNr > 400), AbtNr>250 \wedge AbtNr \leq 400 \} $
+mit $ A_1 $ in Q wesentliche Verbesserung, also keine unnötige Partitionierung und $ Q = \{ A_1, A_2, A_4 \} $\\
+\textit{unnötige Partitionierung} bzgl. $ A_2 $?: \\
+$ Q' = \{A_1, A_4 \}, M(Q') = \{ A_1^+ A_4^+, A_1^+ A_4^-, A_1^-\} $\\
+$ F(Q') = \{ AbtNr\leq 150, AbtNr >150 \wedge AbtNr \leq 250, AbtNr >250 \} $
+mit $ A_2 $ in Q wesentliche Verbesserung, also keine unnötige Partitionierung und $ Q = \{ A_1, A_2, A_4 \} $\\
+\\
+%Prädikat A_5
+\textbf{Prädikat $ A_5 $}:\\
+$ Q' = \{ A_1, A_2, A_4, A_5 \} $\\
+relevante Minterme: $ M(Q') = \{ A_4^+, A_1^+ A_5^+, A_2^+ A_5^+, A_2^+ A_5^-, A_1^- A_2^- \} $\\
+$ F(Q') = \{ AbtNr\leq 150, AbtNr >150 \wedge AbtNr \leq 250, AbtNr>250 \wedge AbtNr \leq 299, AbtNr >299 \wedge AbtNr \leq 400, AbtNr > 400 \} $\\
+ja, es gibt eine wesentliche Verbesserung, also $ Q = \{ A_1, A_2, A_4, A_5 \} $ \\
+\textit{unnötige Partitionierung} bzgl. $ A_1 $?: \\
+$ Q' = \{A_2, A_4, A_5) \}, M(Q') = \{ A_4^+, A_2^- A_5^+, A_2^+ A_5^+, A_2^+ A_5^-, A_2^- A_4^- A_5^- \} $\\
+$ F(Q') = \{ AbtNr\leq 150, AbtNr >150 \wedge AbtNr \leq 250, AbtNr>250 \wedge AbtNr \leq 299, AbtNr >299 \wedge AbtNr \leq 400, AbtNr > 400 \} $
+mit $ A_1 $ in Q keine wesentliche Verbesserung, also unnötige Partitionierung und $ Q = \{ A_2, A_4, A_5 \} $\\
+\textit{unnötige Partitionierung} bzgl. $ A_2 $?: \\
+$ Q' = \{A_4, A_5 \}, M(Q') = \{ A_4^+ A_5^+, A_4^- A_5^+, A_4^+ A_5^-, A_4^- A_5^- \} $\\
+$ F(Q') = \{ AbtNr\leq 150, AbtNr >150 \wedge AbtNr \leq 299, AbtNr > 299\} $
+mit $ A_2 $ in Q wesentliche Verbesserung, also keine unnötige Partitionierung und $ Q = \{ A_2, A_4, A_5 \} $\\
+\textit{unnötige Partitionierung} bzgl. $ A_4 $?: \\
+$ Q' = \{A_2, A_5 \}, M(Q') = \{ A_2^+ A_5^+, A_2^- A_5^+, A_2^+ A_5^-, A_2^- A_5^- \} $\\
+$ F(Q') = \{ AbtNr\leq 150 \vee AbtNr > 400, AbtNr >150 \wedge AbtNr \leq 250, AbtNr>250 \wedge AbtNr \leq 299, AbtNr >299 \wedge AbtNr \leq 400\} $
+mit $ A_2 $ in Q wesentliche Verbesserung, also keine unnötige Partitionierung und $ Q = \{ A_2, A_4, A_5 \} $\\
+\\
+%Prädikat A6
+\textbf{Prädikat $ A_6 $}:\\
+$ Q' = \{ A_2, A_4, A_5, A_6 \} $\\
+relevante Minterme: $ M(Q') = \{ A_4^+, A_2^- A_5^+, A_2^+ A_5^+, A_2^+ A_5^-, A_2^- A_4^- A_5^- \} $\\
+$ F(Q') = \{ AbtNr\leq 150, AbtNr >150 \wedge AbtNr \leq 250, AbtNr>250 \wedge AbtNr \leq 299, AbtNr >299 \wedge AbtNr \leq 400, AbtNr > 400 \} $\\
+nein, es gibt keine wesentliche Verbesserung, also bleibt $ Q = \{ A_2, A_4, A_5 \} $ \\
+\\
+\textbf{resultierende Partitionierung}:\\
+$ F(Q') = \{ AbtNr\leq 150, AbtNr >150 \wedge AbtNr \leq 250, AbtNr>250 \wedge AbtNr \leq 299, AbtNr >299 \wedge AbtNr \leq 400, AbtNr > 400 \} $\\
+Da AbtNr ein Primärschlüssel ist wird davon ausgegangen, dass NULL-Werte bei der Partitionierung nicht berücksichtigt werden müssen. 
+
+
+
+
+
+
+
+\end{document}
+
+
