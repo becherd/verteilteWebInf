@@ -2,11 +2,9 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage{enumitem}
-\usepackage{amsmath}
-\usepackage{amssymb}
-%\usepackage{ifsym}
 
 
+\usepackage{verbatim}
 
 \author{Gruppe 6}
 
@@ -15,14 +13,48 @@
 
 
 
-%\newcommand{\LeftSemiJoin}{\textbf{\tiny \textifsym{|><}}}
-%\newcommand{\RightSemiJoin}{\textbf{\tiny	 \textifsym{><|}}}
 
 \begin{document}
 \maketitle
 
+
 \section*{Aufgabe 1}
-TODO
+
+
+\subsection*{Information Manifold}
+\subsubsection*{Globale Prädikate:}
+\texttt{auto(A)}: Auto \texttt{A}\\
+\texttt{marke(A,M)}: Marke \texttt{M} \\
+\texttt{modell(A,M,T)}: Modell \texttt{T} der Marke \texttt{M}\\
+\texttt{maxPreis(A,P)}: Maximaler Preis \texttt{P} \\
+\texttt{erstzulassung(A,E)}: Erstzulassung \texttt{E} \\
+\texttt{kilometerstand(A,Km)}: Kilometerstand \texttt{Km}\\
+\texttt{kraftstoff(A,K)}: Kraftstoffart \texttt{K}\\
+\texttt{ort(A,O)}: Ortsname \texttt{O}\\
+\texttt{plz(A,Plz)}: Postleitzahl \texttt{Plz}\\
+\texttt{land(A,L)}: Land \texttt{L}\\
+\texttt{umkreisO(A,O,U)}: Umkreis \texttt{U} um Ort mit Name \texttt{O}\\
+\texttt{umkreisPlz(A,Plz,U)}: Umkreis \texttt{U} um Ort mit PLZ \texttt{Plz} \\
+\texttt{Garantie(A,G)}: Garantie \texttt{G} (\emph{true} oder \emph{false})\\
+
+\subsubsection*{Datenquellen:}
+\begin{verbatim}
+mobile(A,M,T,P,E,Km,K,Plz,L,U) :- auto(A) & marke(A,M) & modell(A,M,T) 
+& maxPreis(A,P) & erstzulassung(A,E) & kilometerstand(A,Km) 
+& kraftstoff(A,K) & plz(A,Plz) & land(A,L) & umkreisPlz(A,Plz,U)
+
+
+autoScout(A,M,T,P,E,Km,K,Plz,O,U,G) :- auto(A) & marke(A,M) & modell(A,M,T) 
+& maxPreis(A,P) & erstzulassung(A,E) & kilometerstand(A,Km) 
+& kraftstoff(A,K) & ort(A,O) & umkreisO(A,O,U) & garantie(A,G)
+
+autoScout(A,M,T,P,E,Km,K,Plz,O,U,G) :- auto(A) & marke(A,M) & modell(A,M,T) 
+& maxPreis(A,P) & erstzulassung(A,E) & kilometerstand(A,Km) 
+& kraftstoff(A,K) & plz(A,Plz) & umkreisPlz(A,Plz,U) & garantie(A,G)
+\end{verbatim}
+
+\subsection*{Tsimmis}
+todo
 
 
 
@@ -90,8 +122,6 @@ nein, es gibt keine wesentliche Verbesserung, also bleibt $ Q = \{ A_2, A_4, A_5
 \textbf{resultierende Partitionierung}:\\
 $ F(Q') = \{ AbtNr\leq 150, AbtNr >150 \wedge AbtNr \leq 250, AbtNr>250 \wedge AbtNr \leq 299, AbtNr >299 \wedge AbtNr \leq 400, AbtNr > 400 \} $\\
 Da AbtNr ein Primärschlüssel ist wird davon ausgegangen, dass NULL-Werte bei der Partitionierung nicht berücksichtigt werden müssen. 
-
-
 
 
 
