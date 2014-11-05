@@ -54,6 +54,7 @@ autoScout(A,M,T,P,E,Km,K,Plz,O,U,G) :- auto(A) & marke(A,M) & modell(A,M,T)
 & maxPreis(A,P) & erstzulassung(A,E) & kilometerstand(A,Km) & ort(A,O)
 & kraftstoff(A,K) & plz(A,Plz) & umkreisPlz(A,Plz,U) & garantie(A,G).
 \end{verbatim}
+Die Anfragen werden gegen diese Sichten gestellt.
 
 \subsection*{Tsimmis}
 \subsubsection*{Datenquellen:}
@@ -82,9 +83,8 @@ kaufInfos(A,P,G) :- autoScout(A,M,T,P,E,Km,K,Plz,O,U,G) &
 
 ortInfos(A,O,Plz,L,UOrt,UPlz) :- autoScout(A,M,T,P,E,Km,K,Plz,O,U,G) &
  mobile(A,M,T,P,E,Km,K,Plz,L,U).
-
 \end{verbatim}
-
+Bei Tsimmis werden die Anfragen gegen die Mediatoren gestellt.
 
 \section*{Aufgabe 2}
 \textbf{Prädikat $ A_1 $}:\\
