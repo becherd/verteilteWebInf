@@ -20,8 +20,6 @@
 
 \section*{Aufgabe 1}
 
-
-\subsection*{Information Manifold}
 \subsubsection*{Globale Prädikate:}
 \texttt{auto(A)}: Auto \texttt{A}\\
 \texttt{marke(A,M)}: Marke \texttt{M} \\
@@ -36,6 +34,10 @@
 \texttt{umkreisO(A,O,U)}: Umkreis \texttt{U} um Ort mit Name \texttt{O}\\
 \texttt{umkreisPlz(A,Plz,U)}: Umkreis \texttt{U} um Ort mit PLZ \texttt{Plz} \\
 \texttt{Garantie(A,G)}: Garantie \texttt{G} (\emph{true} oder \emph{false})\\
+
+
+\subsection*{Information Manifold}
+
 
 \subsubsection*{Datenquellen:}
 \begin{verbatim}
@@ -61,21 +63,24 @@ mobile(A,M,T,P,E,Km,K,Plz,L,U) :- auto(A) & marke(A,M) & modell(A,M,T)
 & kraftstoff(A,K) & plz(A,Plz) & land(A,L) & umkreisPlz(A,Plz,U).
 
 
-autoScout(A,M,T,P,E,Km,K,Plz,O,UPlz,UOrt,G) :- auto(A) & marke(A,M) & modell(A,M,T) 
-& maxPreis(A,P) & erstzulassung(A,E) & kilometerstand(A,Km) & kraftstoff(A,K) 
-& ort(A,O) & umkreisO(A,O,UOrt) & umkreisPlz(A,Plz,UPlz) & garantie(A,G).
+autoScout(A,M,T,P,E,Km,K,Plz,O,U,G) :- auto(A) & marke(A,M) & modell(A,M,T) 
+& maxPreis(A,P) & erstzulassung(A,E) & kilometerstand(A,Km) & plz(A,Plz)
+& kraftstoff(A,K) & ort(A,O) & umkreisO(A,O,U) & garantie(A,G).
 
+autoScout(A,M,T,P,E,Km,K,Plz,O,U,G) :- auto(A) & marke(A,M) & modell(A,M,T) 
+& maxPreis(A,P) & erstzulassung(A,E) & kilometerstand(A,Km) & ort(A,O)
+& kraftstoff(A,K) & plz(A,Plz) & umkreisPlz(A,Plz,U) & garantie(A,G).
 \end{verbatim}
 
 \subsubsection*{Mediatoren:}
 \begin{verbatim}
-kennzahlenAuto(A,M,T,E,Km,K) :- autoScout(A,M,T,P,E,Km,K,Plz,O,UPlz,UOrt,G) &
+kennzahlenAuto(A,M,T,E,Km,K) :- autoScout(A,M,T,P,E,Km,K,Plz,O,U,G) &
  mobile(A,M,T,P,E,Km,K,Plz,L,U).
 
-kaufInfos(A,P,G) :- autoScout(A,M,T,P,E,Km,K,Plz,O,UPlz,UOrt,G) &
+kaufInfos(A,P,G) :- autoScout(A,M,T,P,E,Km,K,Plz,O,U,G) &
  mobile(A,M,T,P,E,Km,K,Plz,L,U).
 
-ortInfos(A,O,Plz,L,UOrt,UPlz) :- autoScout(A,M,T,P,E,Km,K,Plz,O,UPlz,UOrt,G) &
+ortInfos(A,O,Plz,L,UOrt,UPlz) :- autoScout(A,M,T,P,E,Km,K,Plz,O,U,G) &
  mobile(A,M,T,P,E,Km,K,Plz,L,U).
 
 \end{verbatim}
