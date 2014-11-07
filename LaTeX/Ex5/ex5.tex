@@ -1,0 +1,122 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+
+\usepackage{verbatim}
+
+\author{Gruppe 6}
+
+\title{\textbf{VerteilteWebInf Hausaufgabe 5}}
+\date{\today}
+
+
+
+
+\begin{document}
+\maketitle
+
+
+\section*{Aufgabe 1}
+\begin{enumerate}[label=\alph*)]
+\item \begin{verbatim}
+SELECT v1.FlugNr as Flug1, v2.FlugNr as Flug2
+FROM Flughaefen f1,Verbindungen v1, Verbindungen v2, Flughaefen f2
+WHERE f1.Stadt='New-York' AND v1.von=f1.Code AND v1.nach=v2.von 
+																	AND v2.nach=f2.Code AND f2.Stadt='Sydney'
+				\end{verbatim}
+
+\item Kanonische Übersetzung:
+
+\tikzset{listingborder/.style={thick}}
+
+
+\begin{tikzpicture} [
+    auto,
+    block/.style    = { rectangle, draw=none,  text centered,
+                        minimum height=5mm },
+    line/.style     = { draw, thick, shorten >=2pt},
+  ]
+
+
+  % Define nodes in matrix
+  \matrix [column sep=0mm, row sep=10mm] {
+&&&&\node[block](project){$\Pi_{v1.FlugNr, v2.FlugNr}$}; \\
+&&&&\node[block](select){\begin{minipage}{4cm}
+$\sigma_{ f1.Stadt='New-York' }$ 
+\newline $_{
+\land v1.von=f1.Code}$ 
+\newline $_{
+\land v1.nach=v2.von}$
+\newline $_{
+\land v2.nach=f2.Code}$
+\newline $_{
+\land f2.Stadt='Sydney'}$
+\end{minipage}};&&; \\
+&&&&\node[block](times3){$\times$};&&\\
+&&&\node[block](times2){$\times$};&&& \node[block](f2){$\rho_{f2}(Flughaefen)$};&; \\
+&&\node[block](times1){$\times$};&&\node[block](v2){$\rho_{v2}(Verbindungen)$};& & \\
+\node[block](f1){$\rho_{f1}(Flughaefen)$};&&&\node[block](v1){$\rho_{v1}(Verbindungen)$}; &&& \\
+  };
+
+
+  % connect the nodes
+		\path [line] (times1) -- (f1);
+		\path [line] (times1) -- (v1);
+		\path [line] (times2) -- (v2);
+		\path [line] (times2) -- (times1);
+		\path [line] (times3) -- (f2);
+		\path [line] (times3) -- (times2);
+		\path [line] (select) -- (times3);
+		\path [line] (project) -- (select);
+\end{tikzpicture}
+
+
+\item Relationsgrößen: 
+$|Flughaefen|=300, |Verbindungen|=100.000$\\
+
+Optimierter Baum:\\
+\begin{tikzpicture} [
+    auto,
+    block/.style    = { rectangle, draw=none,  text centered,
+                        minimum height=5mm },
+    line/.style     = { draw, thick, shorten >=2pt},
+  ]
+
+
+  % Define nodes in matrix
+  \matrix [column sep=-13mm, row sep=10mm] {
+&&&\node[block](project){$\Pi_{v1.FlugNr, v2.FlugNr}$}; \\
+&&&\node[block](times3){$\Join_{v1.nach=v2.von}$}; \\
+&\node[block](times1){$\Join_{v2.nach=f2.Code}$};&&&&\node[block](times2){$\Join_{v1.von=f1.Code}$};\\
+\node[block](s1){$\sigma_{f2.Stadt='Sydney'}$};&&\node[block](v2){$\rho_{v2}(Verbindungen)$}; &&\node[block](v1){$\rho_{v1}(Verbindungen)$};&&\node [block](s2){$\sigma_{ f1.Stadt='New-York' }$}; \\
+\node[block](f2){$\rho_{f2}(Flughaefen)$};&&&&&& \node[block](f1){$\rho_{f1}(Flughaefen)$}; \\
+  };
+
+
+  % connect the nodes
+		\path [line] (times1) -- (s1);
+		\path [line] (s1) -- (f2);
+		\path [line] (times1) -- (v2);
+		\path [line] (times2) -- (v1);
+		\path [line] (times2) -- (s2);
+		\path [line] (times3) -- (times1);
+		\path [line] (times3) -- (times2);
+		\path [line] (s2) -- (f1);
+		\path [line] (project) -- (times3);
+\end{tikzpicture}
+
+
+
+\end{enumerate}
+
+
+
+
+\end{document}
+
+
