@@ -77,7 +77,7 @@ $\sigma_{ f1.Stadt='New-York' }$
 		\path [line] (times3) --node{$3\cdot 10^{12}$} (times2);
 		\path [line] (select) --node{$9\cdot 10^{14}$} (times3);
 		\path [line] (project) --node{20} (select);
-\end{tikzpicture}
+\end{tikzpicture}\\
 Die Zahlen an den Kanten geben die Größe der jeweiligen (Zwischen-) Relation an. Grundlage der Werte sind die Abschätzungen aus Teilaufgabe $c)$.
 
 \item Relationsgrößen: 
@@ -114,7 +114,7 @@ Optimierter Baum:\\
 		\path [line] (project) --node{20} (times3);
 \end{tikzpicture}\\
 
-Dies stellt eine gravierende Verbesserung gegenüber der kanonischen Übersetzung dar, da kein Zwischenergebnis größer als 800 Tupel beinhaltet. Bei der kanonischen Übersetzung der SQL-Query beinhaltet die Zwischenrelation $9\cdot10^{14} Tupel, bevor die Selektion angewendet wird.$
+Dies stellt eine gravierende Verbesserung gegenüber der kanonischen Übersetzung dar, da kein Zwischenergebnis größer als 800 Tupel beinhaltet. Bei der kanonischen Übersetzung der SQL-Query beinhaltet die Zwischenrelation $9\cdot10^{14} $ Tupel, bevor die Selektion angewendet wird.
 
 \item 
 
@@ -207,8 +207,28 @@ Optimierter Baum:\\
 \end{enumerate}
 
 
-
-
+\section*{Aufgabe 2}
+\textbf{Messzeiten für kleinen Testdatensatz:}\\
+----------------------------------------\\
+Hash-Join\\
+----------------------------------------\\
+Zeit bis erstes Ergebnis: 659 ms\\
+Zeit gesamt: 10421 ms\\
+\\
+----------------------------------------\\
+X-Join\\
+----------------------------------------\\
+Zeit bis erstes Ergebnis: 321 ms\\
+Zeit gesamt: 10099 ms\\
+\\
+----------------------------------------\\
+NL-Join\\
+----------------------------------------\\
+Zeit bis erstes Ergebnis: 3921 ms\\
+Zeit gesamt: 100052 ms\\
+\\
+\textbf{Messzeiten für gesamten Testdatensatz:}\\
+TODO
 \end{document}
 
 
