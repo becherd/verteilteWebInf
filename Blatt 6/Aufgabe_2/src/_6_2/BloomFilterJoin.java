@@ -11,15 +11,14 @@ import java.util.Map;
 import java.util.Queue;
 
 /**
+ * Assumption: There is only one join attribute: the first one with index 0
+ *
  * @author Hannes Dorfmann
  */
 public class BloomFilterJoin implements DBIterator {
 
   DBIterator left;
   DBIterator right;
-  String joinAttribute;
-  int joinAttributeIndexLeft;
-  int joinAttributeIndexRight;
   BloomFilter<Register[]> leftBloomFilter;
   Map<Object, List<Register[]>> leftMap = new HashMap<>();
   Queue<Register[]> temporaryResult = new LinkedList<>();
@@ -39,6 +38,7 @@ public class BloomFilterJoin implements DBIterator {
     String[] leftHeaders = left.open();
     String[] rightHeaders = right.open();
 
+    /*
     for (int i = 0; i < leftHeaders.length; i++) {
       if (leftHeaders[i].equals(joinAttribute)) {
         joinAttributeIndexLeft = i;
@@ -52,6 +52,7 @@ public class BloomFilterJoin implements DBIterator {
         break;
       }
     }
+    */
 
     // Create the BloomFilter
     leftBloomFilter = createBloomFilter();
@@ -62,17 +63,26 @@ public class BloomFilterJoin implements DBIterator {
       putInLeftMap(nextLeft);
     }
 
-    // TODO headers
-    return new String[0];
+    String[] headers = new String[leftHeaders.length + rightHeaders.length - 1];
+    int pos = 0;
+    for (int i = 0; i < leftHeaders.length; i++) {
+      headers[pos++] = leftHeaders[i];
+    }
+
+    for (int i = 1; i < rightHeaders.length; i++) {
+      headers[pos++] = rightHeaders[i];
+    }
+
+    return headers;
   }
 
   /**
    * Put a register in the left register
    */
   private void putInLeftMap(Register[] register) {
-    Object key = register[joinAttributeIndexLeft].getObject();
+    Object key = register[0].getObject();
     List<Register[]> found = leftMap.get(key);
-    if (found != null) {
+    if (found == null) {
       found = new ArrayList<>();
       leftMap.put(key, found);
     }
@@ -97,7 +107,7 @@ public class BloomFilterJoin implements DBIterator {
     }
 
     // Search for next join partner in right table
-    Register[] ret = null;
+    Register[] returnValue = null;
     Register[] nextRight = null;
 
     while ((nextRight = right.next()) != null) {
@@ -109,16 +119,20 @@ public class BloomFilterJoin implements DBIterator {
 
       //
       List<Register[]> joinables = getJoinPartners(nextRight);
-      for (Register[] left : joinables){
-        Register[] joinResult = createJoinResult(left, nextRight);
-        if (ret == null) {
-          ret = joinResult;
-        } else {
-          temporaryResult.offer(joinResult);
+      if (joinables != null) {
+        for (Register[] left : joinables) {
+          Register[] joinResult = createJoinResult(left, nextRight);
+          if (returnValue == null) {
+            returnValue = joinResult;
+          } else {
+            temporaryResult.offer(joinResult);
+          }
+        }
+
+        if (returnValue != null) {
+          return returnValue;
         }
       }
-
-
     }
 
     // Nothing more to join
@@ -127,28 +141,23 @@ public class BloomFilterJoin implements DBIterator {
 
   /**
    * Get the list of join partners (from left) for the given right side
-   * @param right
-   * @return
    */
-  private List<Register[]> getJoinPartners(Register[] right){
-    return leftMap.get(right[0]);
+  private List<Register[]> getJoinPartners(Register[] right) {
+    return leftMap.get(right[0].getObject());
   }
 
   /**
    * Creates a join result
-   * @param left
-   * @param right
-   * @return
    */
-  private Register[] createJoinResult(Register[] left, Register [] right){
+  private Register[] createJoinResult(Register[] left, Register[] right) {
     Register[] result = new Register[left.length + right.length - 1]; // -1 because of joining key
 
     int pos = 0;
-    for (int i = 0; i< left.length; i++){
+    for (int i = 0; i < left.length; i++) {
       result[pos++] = left[i];
     }
 
-    for (int i = 1; i< right.length; i++){
+    for (int i = 1; i < right.length; i++) {
       result[pos++] = right[i];
     }
 
