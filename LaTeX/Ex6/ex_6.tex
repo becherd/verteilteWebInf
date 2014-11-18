@@ -1,0 +1,47 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{anysize}
+
+\usepackage{verbatim}
+
+
+\marginsize{2.0cm}{2cm}{2.5cm}{2.5cm}
+
+\author{Gruppe 6}
+
+\title{\textbf{VerteilteWebInf Hausaufgabe 6}}
+\date{\today}
+
+
+
+
+\begin{document}
+\maketitle
+
+
+\section*{Aufgabe 1}
+False-Drop-Abschätzung beim Bloom-Filter (für Join zwischen R und S): \\
+Abbildung auf einen Hash-Filter der Länge b (0, ..., b-1) mit k Hash-Funktionen:
+\begin{itemize}
+\item Wahrscheinlichkeit, dass kein $ r \in R $ ein bestimmtes Bit setzt: $ (1-1/b)^{k* \vert R \vert} ((1-1/b)^b)^{k*\vert R \vert / b} \approx e^{-k*\vert R \vert / b} $ (für große b, Definition der e-Funktion)\\
+Wahrscheinlichkeit, dass ein $ r \in R $ das Bit gesetzt hat: $ (1- (1-1/b)^{k*\vert R \vert})^k \approx (1-e^{-k*\vert R \vert / b})^k $
+\item Wahrscheinlichkeit, dass ein bestimmtes $ s \in S $ ausgewählt wird: $ (1- (1-1/b)^{k*\vert R \vert})^k \approx (1-e^{-k*\vert R \vert / b})^k $ = Wahrscheinlichkeit für ein false positive
+\end{itemize}
+
+
+
+
+
+
+
+
+
+\end{document}
+
+
