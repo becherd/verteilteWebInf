@@ -35,40 +35,31 @@ public class Main {
       Register[] result = join.next();
       long time_stop_next = System.currentTimeMillis();
 
-      if (result != null){
+      if (result != null) {
         resultList.add(result);
       }
 
       while (result != null) {
-      /*
-      for(int i=0; i<result.length; i++){
-				System.out.print(result[i] + "\t");
-			}
-			System.out.println("");
-			*/
         resultList.add(result);
         result = join.next();
-
       }
       join.close();
       long time_stop_gesamt = System.currentTimeMillis();
-      for (String h : headers){
-        System.out.print(h+"\t");
+      for (String h : headers) {
+        System.out.print(h + "\t");
       }
       System.out.println();
 
-      for (Register[] register : resultList){
-        for (Register r : register){
-          System.out.print(r.getObject()+"\t");
+      for (Register[] register : resultList) {
+        for (Register r : register) {
+          System.out.print(r.getObject() + "\t");
         }
         System.out.println();
       }
 
-
       System.out.println("----------------------------------------");
-      System.out.println("Zeit erstes Ergebnis: "+(time_stop_next - time_start_next)+" ms");
+      System.out.println("Zeit erstes Ergebnis: " + (time_stop_next - time_start_next) + " ms");
       System.out.println("Zeit gesamt: " + (time_stop_gesamt - time_start_gesamt) + " ms");
-
     } catch (Exception e) {
       e.printStackTrace();
     }
