@@ -22,6 +22,8 @@ public class BloomFilterJoin implements DBIterator {
   BloomFilter<Register[]> leftBloomFilter;
   Map<Object, List<Register[]>> leftMap = new HashMap<>();
   Queue<Register[]> temporaryResult = new LinkedList<>();
+  int leftJoinAttributeIndex;
+  int rightJoinAttributeIndex;
 
   public BloomFilterJoin(DBIterator left, DBIterator right) {
     this.left = left;
@@ -33,26 +35,26 @@ public class BloomFilterJoin implements DBIterator {
     right.close();
   }
 
+  private void findJoinAttribute(String[] leftHeaders, String[] rightHeaders) {
+    for (int i = 0; i < leftHeaders.length; i++) {
+      for (int j = 0; j < rightHeaders.length; j++) {
+
+        if (leftHeaders[i].equals(rightHeaders[j])) {
+          leftJoinAttributeIndex = i;
+          rightJoinAttributeIndex = j;
+          return;
+        }
+      }
+    }
+    throw new RuntimeException("No joinable attributes found");
+  }
+
   @Override public String[] open() {
     // Find join indexes
     String[] leftHeaders = left.open();
     String[] rightHeaders = right.open();
 
-    /*
-    for (int i = 0; i < leftHeaders.length; i++) {
-      if (leftHeaders[i].equals(joinAttribute)) {
-        joinAttributeIndexLeft = i;
-        break;
-      }
-    }
-
-    for (int i = 0; i < rightHeaders.length; i++) {
-      if (rightHeaders[i].equals(joinAttribute)) {
-        joinAttributeIndexRight = i;
-        break;
-      }
-    }
-    */
+    findJoinAttribute(leftHeaders, rightHeaders);
 
     // Create the BloomFilter
     leftBloomFilter = createBloomFilter();
@@ -69,8 +71,10 @@ public class BloomFilterJoin implements DBIterator {
       headers[pos++] = leftHeaders[i];
     }
 
-    for (int i = 1; i < rightHeaders.length; i++) {
-      headers[pos++] = rightHeaders[i];
+    for (int i = 0; i < rightHeaders.length; i++) {
+      if (i != rightJoinAttributeIndex) {
+        headers[pos++] = rightHeaders[i];
+      }
     }
 
     return headers;
@@ -80,7 +84,7 @@ public class BloomFilterJoin implements DBIterator {
    * Put a register in the left register
    */
   private void putInLeftMap(Register[] register) {
-    Object key = register[0].getObject();
+    Object key = register[leftJoinAttributeIndex].getObject();
     List<Register[]> found = leftMap.get(key);
     if (found == null) {
       found = new ArrayList<>();
@@ -93,7 +97,7 @@ public class BloomFilterJoin implements DBIterator {
   private BloomFilter<Register[]> createBloomFilter() {
     return BloomFilter.create(new Funnel<Register[]>() {
       @Override public void funnel(Register[] from, PrimitiveSink into) {
-        into.putInt(from[0].getInt());
+        into.putInt(from[leftJoinAttributeIndex].getInt());
       }
     }, 10100, 0.01); // S contains ca. 10100 entries
   }
@@ -135,7 +139,7 @@ public class BloomFilterJoin implements DBIterator {
       }
     }
 
-    // Nothing more to join
+    // No more joins
     return null;
   }
 
@@ -143,7 +147,7 @@ public class BloomFilterJoin implements DBIterator {
    * Get the list of join partners (from left) for the given right side
    */
   private List<Register[]> getJoinPartners(Register[] right) {
-    return leftMap.get(right[0].getObject());
+    return leftMap.get(right[rightJoinAttributeIndex].getObject());
   }
 
   /**
@@ -157,10 +161,13 @@ public class BloomFilterJoin implements DBIterator {
       result[pos++] = left[i];
     }
 
-    for (int i = 1; i < right.length; i++) {
-      result[pos++] = right[i];
+    for (int i = 0; i < right.length; i++) {
+      if (i != rightJoinAttributeIndex) {
+        result[pos++] = right[i];
+      }
     }
 
     return result;
   }
+
 }
