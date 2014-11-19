@@ -84,7 +84,7 @@ public class BloomFilterClientProxy implements BloomFilterDBIterator {
   }
 
   @Override
-  public void writeBloomFilter(BloomFilter<Register[]> bloomFilter){
+  public void writeBloomFilter(BloomFilter<Register> bloomFilter){
     try {
       writer.write("bloomfilter");
       writer.newLine();

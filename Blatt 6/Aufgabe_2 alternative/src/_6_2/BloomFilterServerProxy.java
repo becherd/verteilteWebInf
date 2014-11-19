@@ -18,7 +18,7 @@ public class BloomFilterServerProxy extends Thread {
   private BufferedWriter writer;
   private ObjectOutputStream objectWriter;
   private ObjectInputStream objectReader;
-  private BloomFilter<Register[]> clientBloomFilter;
+  private BloomFilter<Register> clientBloomFilter;
 
   public BloomFilterServerProxy(int port, DBIterator it) throws IOException {
     this.socket = new ServerSocket(port);
@@ -46,7 +46,7 @@ public class BloomFilterServerProxy extends Thread {
           objectWriter.writeObject(header);
           objectWriter.flush();
         } else if (command.equals("bloomfilter")) {
-          clientBloomFilter = (BloomFilter<Register[]>) objectReader.readObject();
+            clientBloomFilter = (BloomFilter<Register>) objectReader.readObject();
         } else if (command.equals("next")) {
           Register[] item = getNextFiltered();
           objectWriter.writeObject(item);
@@ -83,7 +83,7 @@ public class BloomFilterServerProxy extends Thread {
 
     Register[] next ;
     while ((next = it.next()) != null){
-      if (clientBloomFilter.mightContain(next)){
+      if (clientBloomFilter.mightContain(next[0])){
         return next;
       }
     }

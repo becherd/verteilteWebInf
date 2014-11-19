@@ -19,7 +19,7 @@ public class BloomFilterJoin implements DBIterator {
 
   DBIterator left;
   BloomFilterDBIterator right;
-  BloomFilter<Register[]> bloomFilter;
+  BloomFilter<Register> bloomFilter;
   Map<Object, List<Register[]>> leftMap = new HashMap<>();
   Queue<Register[]> temporaryResult = new LinkedList<>();
   int leftJoinAttributeIndex;
@@ -61,7 +61,7 @@ public class BloomFilterJoin implements DBIterator {
     Register[] nextLeft = null;
 
     while ((nextLeft = left.next()) != null) {
-      bloomFilter.put(nextLeft);
+      bloomFilter.put(nextLeft[leftJoinAttributeIndex]);
       putInLeftMap(nextLeft);
     }
 
@@ -97,16 +97,12 @@ public class BloomFilterJoin implements DBIterator {
     found.add(register);
   }
 
-  private BloomFilter<Register[]> createBloomFilter() {
-    return BloomFilter.create(new Funnel<Register[]>() {
-      @Override public void funnel(Register[] from, PrimitiveSink into) {
-        into.putInt(from[leftJoinAttributeIndex].getInt());
+  private BloomFilter<Register> createBloomFilter() {
+    return BloomFilter.create(new Funnel<Register>() {
+      @Override public void funnel(Register from, PrimitiveSink into) {
+        into.putInt(from.getInt());
       }
     }, 10100, 0.01); // S contains ca. 10100 entries
-  }
-
-  private void sendBloomFilter(){
-
   }
 
   @Override public Register[] next() {
