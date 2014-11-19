@@ -18,7 +18,8 @@ public class BloomFilterServerProxy extends Thread {
   private BufferedWriter writer;
   private ObjectOutputStream objectWriter;
   private ObjectInputStream objectReader;
-  private BloomFilter<Register> clientBloomFilter;
+  private BloomFilter<Integer> clientBloomFilter;
+  private int joinAttributeIndex;
 
   public BloomFilterServerProxy(int port, DBIterator it) throws IOException {
     this.socket = new ServerSocket(port);
@@ -45,8 +46,9 @@ public class BloomFilterServerProxy extends Thread {
           String[] header = it.open();
           objectWriter.writeObject(header);
           objectWriter.flush();
-        } else if (command.equals("bloomfilter")) {
-            clientBloomFilter = (BloomFilter<Register>) objectReader.readObject();
+        } else if (command.startsWith("bloomfilter")) {
+          joinAttributeIndex = Integer.parseInt(command.split(" ")[1]);
+          clientBloomFilter = (BloomFilter<Integer>) objectReader.readObject();
         } else if (command.equals("next")) {
           Register[] item = getNextFiltered();
           objectWriter.writeObject(item);
@@ -77,13 +79,12 @@ public class BloomFilterServerProxy extends Thread {
 
   /**
    * Get the next filtered (is in the bloom filter)
-   * @return
    */
   private Register[] getNextFiltered() {
 
-    Register[] next ;
-    while ((next = it.next()) != null){
-      if (clientBloomFilter.mightContain(next[0])){
+    Register[] next;
+    while ((next = it.next()) != null) {
+      if (clientBloomFilter.mightContain(next[joinAttributeIndex].getInt())) {
         return next;
       }
     }

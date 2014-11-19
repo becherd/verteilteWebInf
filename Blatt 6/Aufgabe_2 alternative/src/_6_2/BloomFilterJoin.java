@@ -1,8 +1,7 @@
 package _6_2;
 
 import com.google.common.hash.BloomFilter;
-import com.google.common.hash.Funnel;
-import com.google.common.hash.PrimitiveSink;
+import com.google.common.hash.Funnels;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -19,7 +18,7 @@ public class BloomFilterJoin implements DBIterator {
 
   DBIterator left;
   BloomFilterDBIterator right;
-  BloomFilter<Register> bloomFilter;
+  BloomFilter<Integer> bloomFilter;
   Map<Object, List<Register[]>> leftMap = new HashMap<>();
   Queue<Register[]> temporaryResult = new LinkedList<>();
   int leftJoinAttributeIndex;
@@ -61,12 +60,12 @@ public class BloomFilterJoin implements DBIterator {
     Register[] nextLeft = null;
 
     while ((nextLeft = left.next()) != null) {
-      bloomFilter.put(nextLeft[leftJoinAttributeIndex]);
+      bloomFilter.put(nextLeft[leftJoinAttributeIndex].getInt());
       putInLeftMap(nextLeft);
     }
 
     // Write BloomFilter
-    right.writeBloomFilter(bloomFilter);
+    right.writeBloomFilter(bloomFilter, rightJoinAttributeIndex);
 
     String[] headers = new String[leftHeaders.length + rightHeaders.length - 1];
     int pos = 0;
@@ -97,13 +96,10 @@ public class BloomFilterJoin implements DBIterator {
     found.add(register);
   }
 
-  private BloomFilter<Register> createBloomFilter() {
-    return BloomFilter.create(new Funnel<Register>() {
-      @Override public void funnel(Register from, PrimitiveSink into) {
-        into.putInt(from.getInt());
-      }
-    }, 10100, 0.01); // S contains ca. 10100 entries
+  private BloomFilter<Integer> createBloomFilter() {
+    return BloomFilter.create(Funnels.integerFunnel(), 10100, 0.01); // S contains ca. 10100 entries
   }
+
 
   @Override public Register[] next() {
 
