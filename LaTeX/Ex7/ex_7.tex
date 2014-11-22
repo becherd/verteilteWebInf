@@ -1,0 +1,99 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{anysize}
+
+\usepackage{verbatim}
+
+
+\marginsize{2.0cm}{2cm}{2.5cm}{2.5cm}
+
+\author{Gruppe 6}
+
+\title{\textbf{VerteilteWebInf Hausaufgabe 7}}
+\date{\today}
+
+
+
+
+\begin{document}
+\maketitle
+
+
+\section*{Aufgabe 1}
+\begin{enumerate}[label=\alph*)]
+\item Annahme: Es wären zwei Joinpartner $ r \in R $ und $ s \in S $ in unterschiedlichen Partitionen $ \mathcal{R}_i $ und $ \mathcal{R}_j $.\\
+Dann gilt $ h(r.A) mod $  $p \neq h(s.B) mod $  $ p $ bei gleicher Hashfunktion h, also gilt $ r.A \neq s.B $, was ein Widerspruch dazu ist, dass r und s Joinpartner sind. 
+\item unter der Annahme, dass jedem Knoten genau eine Partition zugeteilt wird muss Knoten i \\
+$ \dfrac{p-1}{p} \mid \mathcal{R}_i \mid + \dfrac{p-1}{p} \mid \mathcal{S}_i \mid $ Tupel verschicken.\\
+Zu addieren sind noch die Ergebnistupel aus dem Join von $ \mathcal{R}_{j,i} $ und $ \mathcal{R}_{j,i} \forall j$, die gegebenenfalls an eine andere Station gesendet werden müssen.
+\item Bei einem Join mit Broadcast verschickt jeder Knoten $ \mid \mathcal{R} \mid $ Tupel.\\
+Zu addieren sind noch die Ergebnistupel aus dem Join von $ \mathcal{R} $ und $ \mathcal{S}_{i} $, die gegebenenfalls an eine andere Station gesendet werden müssen.
+\item $ \mathcal{R} < \dfrac{p-1}{p} \mid \mathcal{R}_i \mid + \dfrac{p-1}{p} \mid \mathcal{S}_i \mid $\\
+Annahme: R und S sind gleichmäßig auf die p Knoten verteilt (d.h. die Partitionen sind alle gleich groß)\\
+$ \mathcal{R} < \dfrac{p-1}{p} * \dfrac{1}{p} * \mid \mathcal{R} \mid + \dfrac{p-1}{p}*  \dfrac{1}{p} * \mid \mathcal{S} \mid $\\
+$ \Longleftrightarrow \mathcal{R} < \dfrac{p-1}{p^2-p-1} \mid \mathcal{S} \mid $
+
+\end{enumerate}
+
+\section*{Aufgabe 2}
+\begin{enumerate}[label=\alph*)]
+\item $ min_data.lp $
+\begin{itemize}
+\item Partition 0: Knoten 0
+\item Partition 1: Knoten 0
+\item Partition 2: Knoten 3
+\item Partition 3: Knoten 0
+\item Partition 4: Knoten 1
+\item Partition 5: Knoten 0
+\item Partition 6: Knoten 0
+\item Partition 7: Knoten 0
+\item Partition 8: Knoten 0
+\item Partition 9: Knoten 0
+\item Partition 10: Knoten 0
+\item Partition 11: Knoten 0
+\item Partition 12: Knoten 0
+\item Partition 13: Knoten 0
+\item Partition 14: Knoten 0
+\item Partition 15: Knoten 0
+\end{itemize}
+
+\item $ min_antwortzeit.lp $
+\begin{itemize}
+\item Partition 0: Knoten 3
+\item Partition 1: Knoten 0
+\item Partition 2: Knoten 3
+\item Partition 3: Knoten 2
+\item Partition 4: Knoten 1
+\item Partition 5: Knoten 2
+\item Partition 6: Knoten 2
+\item Partition 7: Knoten 3
+\item Partition 8: Knoten 0
+\item Partition 9: Knoten 0
+\item Partition 10: Knoten 0
+\item Partition 11: Knoten 1
+\item Partition 12: Knoten 1
+\item Partition 13: Knoten 0
+\item Partition 14: Knoten 0
+\item Partition 15: Knoten 3
+\end{itemize}
+
+\item \textit{Aufgabe a}:\\
+gesamte Übertragungskosten: 313\\
+Übertragungszeit: 264\\
+\textit{Aufgabe b}:\\
+gesamte Übertragungskosten: 328\\
+Übertragungszeit: 95\\
+insgesamt sieht man also, dass bei Aufgabe a) die gesamten Übertragungskosten minimiert sind, während bei b) die Übertragungszeit minimiert wurde.\\
+Besonders auffällig ist hierbei, dass bei nur geringer höheren Gesamtübertragungskosten die Übertragungszeit dramatisch sinkt, weshalb in diesem Fall vermutlich b) zu bevorzugen wäre.
+\end{enumerate}
+
+
+\end{document}
+
+
