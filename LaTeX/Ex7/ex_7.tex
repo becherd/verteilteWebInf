@@ -36,9 +36,13 @@ Zu addieren sind noch die Ergebnistupel aus dem Join von $ \mathcal{R}_{j,i} $ u
 Zu addieren sind noch die Ergebnistupel aus dem Join von $ \mathcal{R} $ und $ \mathcal{S}_{i} $, die gegebenenfalls an eine andere Station gesendet werden müssen.
 \item $ \mathcal{R} < \dfrac{p-1}{p} \mid \mathcal{R}_i \mid + \dfrac{p-1}{p} \mid \mathcal{S}_i \mid $\\
 Annahme: R und S sind gleichmäßig auf die p Knoten verteilt (d.h. die Partitionen sind alle gleich groß)\\
-$ \mathcal{R} < \dfrac{p-1}{p} * \dfrac{1}{p} * \mid \mathcal{R} \mid + \dfrac{p-1}{p}*  \dfrac{1}{p} * \mid \mathcal{S} \mid $\\
+$ \mathcal{R} < \dfrac{p-1}{p} \cdot \dfrac{1}{p} \cdot \mid \mathcal{R} \mid + \dfrac{p-1}{p} \cdot \dfrac{1}{p} \cdot \mid \mathcal{S} \mid $\\
 $ \Longleftrightarrow \mathcal{R} < \dfrac{p-1}{p^2-p-1} \mid \mathcal{S} \mid $
-
+\item Alle Knoten $i\neq k$ schicken gleichzeitig $D$ Daten an Knoten $k$. Dieser empfängt mit Bandbreite $b$.\\
+Die gesamte Zeit, bis Knoten $k$ alle Daten vollständig erhalten hat, ist somit $t_{vj} = \frac{(n-1)D}{b}$.
+\item Pro Knoten müssen jetzt $p(n-1)$ Partitionen an Knoten $k$ verschickt werden, also: $t=(n-1)\frac{(n-1)D}{b}$. Es dauert also $(n-1)$ mal länger als beim verteilten Join.\\
+\item Knoten $1$ muss jetzt doppelt so viele Daten senden, die Zeit ingesamt ergibt sich dann zu $t=(n-2)\frac{D}{b} + \frac{2D}{b}$
+\item Wenn $p>n$ muss jeder Knoten u.U. nicht alle seine Tupel senden, sondern es reicht, eine seiner Partitionen zu senden.
 \end{enumerate}
 
 \section*{Aufgabe 2}
