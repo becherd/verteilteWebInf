@@ -40,14 +40,16 @@ $ \mathcal{R} < \dfrac{p-1}{p} \cdot \dfrac{1}{p} \cdot \mid \mathcal{R} \mid + 
 $ \Longleftrightarrow \mathcal{R} < \dfrac{p-1}{p^2-p-1} \mid \mathcal{S} \mid $
 \item Alle Knoten $i\neq k$ schicken gleichzeitig $D$ Daten an Knoten $k$. Dieser empfängt mit Bandbreite $b$.\\
 Die gesamte Zeit, bis Knoten $k$ alle Daten vollständig erhalten hat, ist somit $t_{vj} = \frac{(n-1)D}{b}$.
-\item Pro Knoten müssen jetzt $p(n-1)$ Partitionen an Knoten $k$ verschickt werden, also: $t=(n-1)\frac{(n-1)D}{b}$. Es dauert also $(n-1)$ mal länger als beim verteilten Join.\\
+\item Die Knoten müssen jetzt insgesamt $p(n-1)=n(n-1)$ Partitionen an Knoten $k$ verschickt werden, also: $t=n\frac{(n-1)D}{b}$. Es dauert also $n$ mal länger als beim verteilten Join.\\
 \item Knoten $1$ muss jetzt doppelt so viele Daten senden, die Zeit ingesamt ergibt sich dann zu $t=(n-2)\frac{D}{b} + \frac{2D}{b}$
-\item Wenn $p>n$ muss jeder Knoten u.U. nicht alle seine Tupel senden, sondern es reicht, eine seiner Partitionen zu senden.
+\item Wenn $p>n$ und keine redundanten Partitionen vorhanden sind, muss jeder Knoten u.U. nicht alle seine Tupel senden, sondern es reicht, eine seiner Partitionen zu senden.\\
+Wenn $p>n$ und es vorkommt, dass Partitionen redundant auf verschiedenen Knoten vorhanden sind, dann kann bei einem Join ein Knoten, der seine Partition an Knoten $k$ senden soll, aus allen Knoten mit der benötigten Partition ausgewählt werden. Z.B. kann der Knoten, der am nächsten zum Knoten $k$ liegt, ausgewählt werden, oder der Knoten, der am wenigsten ausgelastet ist. 
 \end{enumerate}
 
+\newpage
 \section*{Aufgabe 2}
 \begin{enumerate}[label=\alph*)]
-\item $ min_data.lp $
+\item $ min\_data.lp $
 \begin{itemize}
 \item Partition 0: Knoten 0
 \item Partition 1: Knoten 0
@@ -67,7 +69,7 @@ Die gesamte Zeit, bis Knoten $k$ alle Daten vollständig erhalten hat, ist somit
 \item Partition 15: Knoten 0
 \end{itemize}
 
-\item $ min_antwortzeit.lp $
+\item $ min\_antwortzeit.lp $
 \begin{itemize}
 \item Partition 0: Knoten 3
 \item Partition 1: Knoten 0
