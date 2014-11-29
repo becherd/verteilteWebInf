@@ -1,0 +1,57 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{anysize}
+
+\usepackage{verbatim}
+
+
+\marginsize{2.0cm}{2cm}{2.5cm}{2.5cm}
+
+\author{Gruppe 6}
+
+\title{\textbf{VerteilteWebInf Hausaufgabe 8}}
+\date{\today}
+
+
+
+
+\begin{document}
+\maketitle
+
+
+\section*{Aufgabe 3}
+\begin{enumerate}[label=\alph*)]
+\item Obermarck-Algorithmus:\\
+Knoten A: 
+\begin{itemize}
+\item $EX\rightarrow T9\rightarrow T1 \rightarrow EX$
+\item $EX\rightarrow T8\rightarrow T3 \rightarrow T1 \rightarrow EX$
+\item $EX\rightarrow T5\rightarrow T3 \rightarrow T1 \rightarrow EX$
+\end{itemize}
+Knoten B: 
+\begin{itemize}
+\item $EX\rightarrow T1\rightarrow T5 \rightarrow EX$
+\end{itemize}
+Knoten C: 
+\begin{itemize}
+\item $EX\rightarrow T4\rightarrow T7 \rightarrow T2 \rightarrow EX$
+\item $EX\rightarrow  T5 \rightarrow EX$
+\end{itemize}
+Knoten A schickt nun alle Pfade seines Wartegraphen an B ($T1<T9$, $T1<T8$, $T1<T5$, $T1$ hat jeweils Sub-Transaktion in B), außerdem schickt Knoten C seinen ersten Pfan an B ($T2<T4$, $T2$ hat Sub-Transaktion in B). Zusätzliche Kanten in B:
+\begin{itemize}
+\item $EX\rightarrow T9\rightarrow T1 \rightarrow EX$
+\item $EX\rightarrow T8\rightarrow T3 \rightarrow T1 \rightarrow EX$
+\item $EX\rightarrow T5\rightarrow T3 \rightarrow T1 \rightarrow EX$
+\item $EX\rightarrow T4\rightarrow T7 \rightarrow T2 \rightarrow EX$
+\end{itemize}
+Im Knoten B ist nun ein Zyklus ohne $EX$ entstanden, nämlich $T5\rightarrow T3\rightarrow T1 \rightarrow T5$, d.h. es wurde ein Deadlock erkannt. Nun muss ein Opfer in diesem Zyklus ausgewählt und zurückgesetzt werden. Wähle z.B. $T5$ als Opfer aus. Weitere Zyklen sind nicht vorhanden, sodass das System anschließend Deadlock-frei ist.
+\end{enumerate}
+\end{document}
+
+
