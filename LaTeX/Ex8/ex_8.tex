@@ -43,7 +43,7 @@ Knoten C:
 \item $EX\rightarrow T4\rightarrow T7 \rightarrow T2 \rightarrow EX$
 \item $EX\rightarrow  T5 \rightarrow EX$
 \end{itemize}
-Knoten A schickt nun alle Pfade seines Wartegraphen an B ($T1<T9$, $T1<T8$, $T1<T5$, $T1$ hat jeweils Sub-Transaktion in B), außerdem schickt Knoten C seinen ersten Pfan an B ($T2<T4$, $T2$ hat Sub-Transaktion in B). Zusätzliche Kanten in B:
+Knoten A schickt nun alle Pfade seines Wartegraphen an B ($TransID(T1)<TransID(T9)$, $TransID(T1)<TransID(T8)$,  $TransID(T1)<TransID(T5)$, $T1$ hat jeweils Sub-Transaktion in B), außerdem schickt Knoten C seinen ersten Pfan an B ($TransID(T2)<TransID(T4)$, $T2$ hat Sub-Transaktion in B). Zusätzliche Kanten in B:
 \begin{itemize}
 \item $EX\rightarrow T9\rightarrow T1 \rightarrow EX$
 \item $EX\rightarrow T8\rightarrow T3 \rightarrow T1 \rightarrow EX$
@@ -51,6 +51,9 @@ Knoten A schickt nun alle Pfade seines Wartegraphen an B ($T1<T9$, $T1<T8$, $T1<
 \item $EX\rightarrow T4\rightarrow T7 \rightarrow T2 \rightarrow EX$
 \end{itemize}
 Im Knoten B ist nun ein Zyklus ohne $EX$ entstanden, nämlich $T5\rightarrow T3\rightarrow T1 \rightarrow T5$, d.h. es wurde ein Deadlock erkannt. Nun muss ein Opfer in diesem Zyklus ausgewählt und zurückgesetzt werden. Wähle z.B. $T5$ als Opfer aus. Weitere Zyklen sind nicht vorhanden, sodass das System anschließend Deadlock-frei ist.
+
+\item Angenommen, es gibt einen Deadlock $T_i\rightarrow...\rightarrow T_k \rightarrow ...\rightarrow T_l \rightarrow ... \rightarrow T_i$.\\
+Dann muss es in mindestens einem Knoten (z.B. $K_1$) den Pfad $EX\rightarrow T_k \rightarrow ... \rightarrow T_l \rightarrow EX$ und in mindestens einem anderen Knoten (z.B. $K_2$) den Pfad $EX\rightarrow T_l \rightarrow ... \rightarrow T_k \rightarrow EX$ geben. Dann ist es ausreichend, wenn ein Knoten diese beiden Pfade kennt, um den Deadlock festzustellen. Es reicht also, wenn Knoten $K_2$ seinen Pfad an $K_1$ schickt, also wenn nur Pfade  $EX\rightarrow T_l \rightarrow ... \rightarrow T_k \rightarrow EX$ verschickt werden, bei denen $TransID(T_l)>TransID(T_k)$ gilt.
 \end{enumerate}
 \end{document}
 
