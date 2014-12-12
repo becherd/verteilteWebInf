@@ -1,0 +1,223 @@
+\documentclass[a4paper, landscape]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{anysize}
+\usepackage{multirow}
+\usepackage{verbatim}
+\usepackage{lscape}
+\usepackage[landscape]{geometry}
+
+
+
+\marginsize{2.0cm}{2cm}{2.5cm}{2.5cm}
+
+\author{Gruppe 6}
+
+\title{\textbf{VerteilteWebInf Hausaufgabe 9}}
+\date{\today}
+
+
+
+
+\begin{document}
+\maketitle
+
+\section*{Aufgabe 1}
+%\begin{landscape}
+
+
+
+\begin{tabular}{| l | l | l | l | l | l | p{6cm} |}
+\hline
+t & K & Status & Input & Entscheidung & Output & Kommentar \\
+\hline
+\hline
+
+
+%%%%%%%%%
+% STEP 1
+%%%%%%%%%
+1 & C & $UPDATE_{T1}(x)$ OK & - & - & $C: UPDATE_{T1}(x)$ OK & \\
+\hline
+\hline
+
+
+%%%%%%%%%
+% STEP 2
+%%%%%%%%%
+2 & \multirow{2}{*}{D} 
+			&	$UPDATE_{T1}(x)$ OK 		& $C: UPDATE_{T1}(x)$ OK	& - &	 $C: UPDATE_{T1}(x)$ OK &\\
+			& &															& 															   &   &	 $D: UPDATE_{T1}(x)$ OK &\\
+\cline{2-7}
+   & A & $UPDATE_{T2}(x)$ OK & - & - & $A: UPDATE_{T2}(x)$ OK & \\
+\hline
+\hline
+
+
+%%%%%%%%%
+% STEP 3
+%%%%%%%%%
+3 & \multirow{3}{*}{E} 
+			&	$UPDATE_{T1}(x)$ OK 		& $C: UPDATE_{T1}(x)$ OK	& - &	 $C: UPDATE_{T1}(x)$ OK &\\
+			& &															& $D: UPDATE_{T1}(x)$ OK &   &		 $D: UPDATE_{T1}(x)$ OK &\\
+			& &															&																	& 	& 	 $E: UPDATE_{T1}(x)$ OK & \\
+
+\cline{2-7}
+& \multirow{2}{*}{B} 
+			&	$UPDATE_{T2}(x)$ OK 		& $A: UPDATE_{T2}(x)$ OK	& - &	 $A: UPDATE_{T2}(x)$ OK &\\
+			& &															& 															   &   &	 $B: UPDATE_{T2}(x)$ OK &\\
+\cline{2-7}
+ 	& F & $UPDATE_{T3}(x)$ OK & - & - & $F: UPDATE_{T3}(x)$ OK & \\
+\hline
+\hline
+
+
+%%%%%%%%%
+% STEP 4
+%%%%%%%%%
+4 & \multirow{4}{*}{F} 
+			&	$UPDATE_{T3}(x)$ OK 					 & $C: UPDATE_{T1}(x)$ OK	& - &	 $C: UPDATE_{T1}(x)$ OK &\\
+			& &$UPDATE_{T1}(x)$ PASSIERE & $D: UPDATE_{T1}(x)$ OK &   &		 $D: UPDATE_{T1}(x)$ OK &\\
+			& &																	   	& $E: UPDATE_{T1}(x)$ OK& 	& 	 $E: UPDATE_{T1}(x)$ OK & \\
+			& &																	   	& 															& 	& 	 $F: UPDATE_{T1}(x)$ PASSIERE & \\
+\cline{2-7}
+& \multirow{2}{*}{C} 
+			&   $UPDATE_{T1}(x)$ OK 		& $A: UPDATE_{T2}(x)$ OK	& - &	 -  &\\
+			&& $UPDATE_{T2}(x)$ WARTE   &  $B: UPDATE_{T2}(x)$ OK  &   &	  & Warte, weil Antrag ($T_2$) mit niedriger priorisiertem Antrag ($T_1$) in Konflikt steht\\
+\cline{2-7}
+& \multirow{2}{*}{G} 
+			&   $UPDATE_{T3}(x)$ OK 		& $F: UPDATE_{T3}(x)$ OK	& - &	$F: UPDATE_{T3}(x)$ OK &\\
+			&& 															   & 															   &    & $G: UPDATE_{T3}(x)$ OK  & \\
+\hline
+\end{tabular}
+\newpage
+\begin{tabular}{| l | l | l | l | l | l | p{6cm} |}
+\hline
+t & K & Status & Input & Entscheidung & Output & Kommentar \\
+\hline
+\hline
+
+
+%%%%%%%%%
+% STEP 5
+%%%%%%%%%
+5 & \multirow{5}{*}{G} 
+			&	$UPDATE_{T3}(x)$ OK 					 & $C: UPDATE_{T1}(x)$ OK	& - &	 $C: UPDATE_{T1}(x)$ OK &\\
+			& &$UPDATE_{T1}(x)$ PASSIERE & $D: UPDATE_{T1}(x)$ OK &   &		 $D: UPDATE_{T1}(x)$ OK &\\
+			& &																	   	& $E: UPDATE_{T1}(x)$ OK& 	& 	    $E: UPDATE_{T1}(x)$ OK & \\
+			& &																	   	& $F: UPDATE_{T1}(x)$ PASSIERE& 	& 	 $F: UPDATE_{T1}(x)$ PASSIERE & \\
+			& &																	   	&																					& 	& 	 $G: UPDATE_{T1}(x)$ PASSIERE & \\
+\cline{2-7}
+& \multirow{2}{*}{C} 
+			&   $UPDATE_{T1}(x)$ OK 		& - 	& - &	 -  &\\
+			&& $UPDATE_{T2}(x)$ WARTE   &   &   &	   &  \\
+\cline{2-7}
+& \multirow{2}{*}{A} 
+			&    $UPDATE_{T2}(x)$ OK	      & $F: UPDATE_{T3}(x)$ OK	& - &	- &\\
+			&&  $UPDATE_{T3}(x)$ WARTE  & 	$G: UPDATE_{T3}(x)$ OK  &    &   & \\
+\hline
+\hline
+
+
+%%%%%%%%%
+% STEP 6
+%%%%%%%%%
+6 & \multirow{6}{*}{A} 
+			&    $UPDATE_{T2}(x)$ OK	      &  $C: UPDATE_{T1}(x)$ OK 	& - &	$C: UPDATE_{T1}(x)$ OK &\\
+			&&  $UPDATE_{T3}(x)$ WARTE  & $D: UPDATE_{T1}(x)$ OK  &    &   $D: UPDATE_{T1}(x)$ OK & \\
+			&&  $UPDATE_{T1}(x)$ PASSIERE & $E: UPDATE_{T1}(x)$ OK &    &  $E: UPDATE_{T1}(x)$ OK & \\
+			& &																	   	& $F: UPDATE_{T1}(x)$ PASSIERE & & $F: UPDATE_{T1}(x)$ PASSIERE &\\
+			& &																	   	& $G: UPDATE_{T1}(x)$ PASSIERE & & $G: UPDATE_{T1}(x)$ PASSIERE& \\
+			& &																	   	&																					 & & $A: UPDATE_{T1}(x)$ PASSIERE& \\
+\cline{2-7}
+& \multirow{2}{*}{C} 
+			&   $UPDATE_{T1}(x)$ OK 		& - 	& - &	 -  &\\
+			&& $UPDATE_{T2}(x)$ WARTE   &   &   &	   &  \\
+\hline
+\hline
+
+
+%%%%%%%%%
+% STEP 7
+%%%%%%%%%
+7 & \multirow{6}{*}{B} 
+			&    $UPDATE_{T2}(x)$ OK	      &  $C: UPDATE_{T1}(x)$ OK 	& ABORT $T_1$ & @ALL: ABORT $T_1$ & ABORT, weil $T_1$ das geforderte\\
+			&&  $UPDATE_{T3}(x)$ WARTE  & $D: UPDATE_{T1}(x)$ OK  &    &   & Quorum (4 mal OK) nicht mehr \\
+			&&  $UPDATE_{T1}(x)$ PASSIERE & $E: UPDATE_{T1}(x)$ OK &    &  & erreichen kann \\
+			& &																	   	& $F: UPDATE_{T1}(x)$ PASSIERE & & &\\
+			& &																	   	& $G: UPDATE_{T1}(x)$ PASSIERE & & & \\
+			& &																	   	& $A: UPDATE_{T1}(x)$ PASSIERE & & & \\
+\cline{2-7}
+& \multirow{2}{*}{C} 
+			&   $UPDATE_{T1}(x)$ OK 		& - 	& - &	 -  &\\
+			&& $UPDATE_{T2}(x)$ WARTE   &   &   &	   &  \\
+\cline{2-7}
+& \multirow{2}{*}{A} 
+			&   $UPDATE_{T2}(x)$ OK 		& - 	& - &	 -  &\\
+			&& $UPDATE_{T3}(x)$ WARTE   &   &   &	   &  \\
+			&&  $UPDATE_{T1}(x)$ PASSIERE &  &  &   & \\
+\hline
+\end{tabular}
+\newpage
+\begin{tabular}{| l | l | l | l | l | l | p{6cm} |}
+\hline
+t & K & Status & Input & Entscheidung & Output & Kommentar \\
+\hline
+\hline
+
+%%%%%%%%%
+% STEP 8
+%%%%%%%%%
+8 & \multirow{2}{*}{A} 
+			&   $UPDATE_{T2}(x)$ OK 		&   ABORT $T_1$ 	& - &	 -  &\\
+			&& $UPDATE_{T3}(x)$ WARTE   &   &   &	   &  \\
+\cline{2-7}
+& \multirow{3}{*}{C} 
+			& $UPDATE_{T2}(x)$ OK   &  ABORT $T_1$  & -  &	 $A: UPDATE_{T2}(x)$ OK  &  \\
+			&& 																		  & 									 &  &	 $B: UPDATE_{T2}(x)$ OK  &  \\
+			&& 																		  & 									 &  &	 $C: UPDATE_{T2}(x)$ OK  &  \\
+\cline{2-7}
+& D & & ABORT $T_1$& - & - &\\
+\cline{2-7}
+& E & & ABORT $T_1$& - & - &\\
+\cline{2-7}
+& F &	$UPDATE_{T3}(x)$ OK 					 & ABORT $T_1$	& - & -&\\
+\cline{2-7}
+& G &	$UPDATE_{T3}(x)$ OK 					 & ABORT $T_1$	& - & -&\\
+\hline
+\hline
+
+%%%%%%%%%
+% STEP 9
+%%%%%%%%%
+9 & \multirow{2}{*}{D} 
+			&   $UPDATE_{T2}(x)$ OK & $A: UPDATE_{T2}(x)$ OK 		  	& COMMIT $T_2$ &	@ALL: COMMIT $T_2$  &\\
+			&& 																& $B: UPDATE_{T2}(x)$ OK      &   &	   &  \\
+			&&																	& $C: UPDATE_{T2}(x)$ OK      &   &	   &  \\
+\cline{2-7}
+& \multirow{2}{*}{A} 
+			&   $UPDATE_{T2}(x)$ OK 		&   -	& - &	 -  &\\
+			&& $UPDATE_{T3}(x)$ WARTE   &   &   &	   &  \\
+\hline
+\hline
+
+
+%%%%%%%%%
+% STEP 10
+%%%%%%%%%
+10 & A & $UPDATE_{T3}(x)$ ABGELEHNT   &  COMMIT $T_2$ &  ABORT $T_3$ &	 @ALL:ABORT $T_3$ &  Durch das COMMIT wurden die Zeitstempel aktualisiert. Dadurch ist sind die Zeitstempel von $F: UPDATE_{T3}(x)$ und $G: UPDATE_{T3}(x)$, die Knoten A in Zeitschritt 5 von Knoten $G$ empfangen hat, veraltet. Deshalb wird ein ABORT ausgelöst.\\
+\hline
+
+					
+\end{tabular}
+%\end{landscape}
+
+
+\end{document}
+
+
