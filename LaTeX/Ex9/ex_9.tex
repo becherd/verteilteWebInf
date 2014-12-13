@@ -217,6 +217,59 @@ t & K & Status & Input & Entscheidung & Output & Kommentar \\
 \end{tabular}
 %\end{landscape}
 
+\section*{Aufgabe 2}
+\begin{enumerate}[label=\alph*)]
+\item 
+\begin{tabular}{| l | l | l | l | l | l | l | l |}
+\hline 
+i & 3 & 14 & 26 & 41 & 56\\
+\hline
+\hline
+0 i+1 & P11 & P26 & P41 & P51 & P61\\
+1 i+2 & P11 & P26 & P41 & P51 & P61\\
+2 i+4 & P11 & P26 & P41 & P51 & P61\\
+3 i+8 & P11 & P26 & P41 & P51 & P3\\
+4 i+16 & P26 & P41 & P51 & P61 & P11\\
+5 i+32 & P41 & P51 & P61 & P11 & P26\\
+\hline
+\end{tabular}
+
+\item 
+Bei jedem Schritt der Suche kann der Suchbereich weiter eingegrenzt werden, es wird also immer mindestens ein genauerer Eintrag der Fingertabelle als der vorherige Eintrag betrachtet. \\
+Bei einem Kreis mit maximal m verschiedenen möglichen Werten ist der Abstand zwischen dem aktuellen Knoten $ A_i $, an dem im i-ten Schritt gesucht wird, und dem gesuchten Knoten x maximal: $ \vert A_i-x \vert \leq \lfloor \frac{m}{2^i} \rfloor $. Dies ergibt sich daraus, dass der mögliche Bereich immer mindestens halbiert wird, da ansonsten aufeinander folgende Schritte widersprüchliche Ergebnisse liefern. \\
+Beendet werden kann der Algorithmus spätestens, wenn der Abstand zwischen dem aktuellen und dem gesuchten Knoten 1 ist, da dann der nächste Knoten des gesuchte ist.Dann gilt: $ \vert A_i-x \vert = 1 = \lfloor \frac{m}{2^i} \rfloor \Leftrightarrow m = 2^i \Leftrightarrow i = log_2 m $\\
+Der Aufwand für die Suche in diese Netzwerk ist somit maximal logarithmisch.
+
+\item 
+\begin{itemize}
+\item Suche K90 ($ \rightarrow 90-64 = 26 $) ausgehend von P3: P3 - P26 (gefunden!) 
+\item Suche K8 ausgehend von P11: P11 - P51 - P3 - P11
+\item Suche K2 ausgehend von P11: P11 - P51 - P61 - P3
+\item Suche K258 ($ \rightarrow 258-64*4 = 2 $) ausgehend von P61: P61 - P3 (gefunden!) 
+\end{itemize}
+
+\item Hinzufügen von P33
+Suchen der Stelle, wo P33 eingefügt werden muss: vor P41\\
+P41 informiert P33 über seinen Vorgänger und P33 meldet sich bei P26 an. \\
+ Dann müssen die anderen Peers über den hinzugefügten Peer informiert werden, damit sie ihre Fingertabellen aktualisieren können. Daraufhin kann P33 die ihm zugeteilten Daten von P41 (von K27 bis K33 (*64)) übernehmen.
+
+\item Fingertabellen nach Hinzufügen von P33:
+\begin{tabular}{| l | l | l | l | l | l | l | l | l |}
+\hline 
+i & 3 & 11 & 14 & 26 & 41 & 51 & 56 & 61\\
+\hline
+\hline
+0 i+1 & P11 & P14 & P26 & \underline{P33} & P51 & P56 & P61 & P3\\
+1 i+2 & P11 & P14 & P26 & \underline{P33} & P51 & P56 & P61 & P3\\
+2 i+4 & P11 & P26 & P26 & \underline{P33} & P51 & P56 & P61 & P3\\
+3 i+8 & P11 & P26 & P26 & P41 & P51 & P61 & P3 & P11\\
+4 i+16 & P26 & \underline{P33} & \underline{P33} & P51 & P61 & P3 & P11 & P14\\
+5 i+32 & P41 & P51 & P51 & P61 & P11 & P26 & P26 & \underline{P33}\\
+
+\hline
+\end{tabular}
+
+\end{enumerate}
 
 \end{document}
 
