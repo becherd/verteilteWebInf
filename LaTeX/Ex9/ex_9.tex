@@ -1,4 +1,4 @@
-\documentclass[a4paper, landscape]{article}
+\documentclass[a4paper]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage{enumitem}
@@ -10,7 +10,7 @@
 \usepackage{multirow}
 \usepackage{verbatim}
 \usepackage{lscape}
-\usepackage[landscape]{geometry}
+
 
 
 
@@ -27,8 +27,14 @@
 \begin{document}
 \maketitle
 
+
 \section*{Aufgabe 1}
-%\begin{landscape}
+In der folgenden Tabelle werden pro Zeitschritt jeweils die Knoten aufgeführt, bei denen sich der Status im Gegensatz zum vorherigen Zeitschritt geändert hat. Knoten, die in einem Wartezustand sind (WARTE in einem Status) sind in jedem Zeitschritt aufgeführt.\\
+Der angegebene Status beschreibt den Status nach Verarbeitung des Inputs.
+
+
+\newpage
+\begin{landscape}
 
 
 
@@ -96,7 +102,7 @@ t & K & Status & Input & Entscheidung & Output & Kommentar \\
 \hline
 \end{tabular}
 \newpage
-\begin{tabular}{| l | l | l | l | l | l | p{6cm} |}
+\begin{tabular}{| l | l | l | l | l | l | p{5cm} |}
 \hline
 t & K & Status & Input & Entscheidung & Output & Kommentar \\
 \hline
@@ -210,12 +216,13 @@ t & K & Status & Input & Entscheidung & Output & Kommentar \\
 %%%%%%%%%
 % STEP 10
 %%%%%%%%%
-10 & A & $UPDATE_{T3}(x)$ ABGELEHNT   &  COMMIT $T_2$ &  ABORT $T_3$ &	 @ALL:ABORT $T_3$ &  Durch das COMMIT wurden die Zeitstempel aktualisiert. Dadurch ist sind die Zeitstempel von $F: UPDATE_{T3}(x)$ und $G: UPDATE_{T3}(x)$, die Knoten A in Zeitschritt 5 von Knoten $G$ empfangen hat, veraltet. Deshalb wird ein ABORT ausgelöst.\\
+10 & A & $UPDATE_{T3}(x)$ ABGELEHNT   &  COMMIT $T_2$ &  ABORT $T_3$ &	 @ALL:ABORT $T_3$ &  Durch das COMMIT wurden die Zeitstempel aktualisiert. Dadurch sind die Zeitstempel von $F: UPDATE_{T3}(x)$ und $G: UPDATE_{T3}(x)$, die Knoten A in Zeitschritt 5 von Knoten $G$ empfangen hat, veraltet. Deshalb wird ein ABORT ausgelöst.\\
 \hline
 
 					
 \end{tabular}
-%\end{landscape}
+\end{landscape}
+\newpage
 
 \section*{Aufgabe 2}
 \begin{enumerate}[label=\alph*)]
@@ -236,8 +243,8 @@ i & 3 & 14 & 26 & 41 & 56\\
 
 \item 
 Bei jedem Schritt der Suche kann der Suchbereich weiter eingegrenzt werden, es wird also immer mindestens ein genauerer Eintrag der Fingertabelle als der vorherige Eintrag betrachtet. \\
-Bei einem Kreis mit maximal m verschiedenen möglichen Werten ist der Abstand zwischen dem aktuellen Knoten $ A_i $, an dem im i-ten Schritt gesucht wird, und dem gesuchten Knoten x maximal: $ \vert A_i-x \vert \leq \lfloor \frac{m}{2^i} \rfloor $. Dies ergibt sich daraus, dass der mögliche Bereich immer mindestens halbiert wird, da ansonsten aufeinander folgende Schritte widersprüchliche Ergebnisse liefern. \\
-Beendet werden kann der Algorithmus spätestens, wenn der Abstand zwischen dem aktuellen und dem gesuchten Knoten 1 ist, da dann der nächste Knoten des gesuchte ist.Dann gilt: $ \vert A_i-x \vert = 1 = \lfloor \frac{m}{2^i} \rfloor \Leftrightarrow m = 2^i \Leftrightarrow i = log_2 m $\\
+Bei einem Kreis mit maximal m verschiedenen möglichen Werten ist der Abstand zwischen dem aktuellen Knoten $ A_i $, an dem im i-ten Schritt gesucht wird, und dem gesuchten Knoten x maximal: $ \vert A_i-x \vert \leq \left\lfloor \frac{m}{2^i} \right\rfloor $. Dies ergibt sich daraus, dass der mögliche Bereich immer mindestens halbiert wird, da ansonsten aufeinander folgende Schritte widersprüchliche Ergebnisse liefern. \\
+Beendet werden kann der Algorithmus spätestens, wenn der Abstand zwischen dem aktuellen und dem gesuchten Knoten 1 ist, da dann der nächste Knoten des gesuchte ist.Dann gilt: $ \vert A_i-x \vert = 1 = \left\lfloor \frac{m}{2^i} \right\rfloor \Leftrightarrow m = 2^i \Leftrightarrow i = log_2 m $\\
 Der Aufwand für die Suche in diese Netzwerk ist somit maximal logarithmisch.
 
 \item 
@@ -253,7 +260,7 @@ Suchen der Stelle, wo P33 eingefügt werden muss: vor P41\\
 P41 informiert P33 über seinen Vorgänger und P33 meldet sich bei P26 an. \\
  Dann müssen die anderen Peers über den hinzugefügten Peer informiert werden, damit sie ihre Fingertabellen aktualisieren können. Daraufhin kann P33 die ihm zugeteilten Daten von P41 (von K27 bis K33 (*64)) übernehmen.
 
-\item Fingertabellen nach Hinzufügen von P33:
+\item Fingertabellen nach Hinzufügen von P33:\\
 \begin{tabular}{| l | l | l | l | l | l | l | l | l |}
 \hline 
 i & 3 & 11 & 14 & 26 & 41 & 51 & 56 & 61\\
