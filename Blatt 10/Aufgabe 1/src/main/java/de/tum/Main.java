@@ -1,7 +1,7 @@
 package de.tum;
 
-import de.tum.benchmark.Benchmark;
 import de.tum.benchmark.HashMapBenchmark;
+import de.tum.benchmark.MongoBenchmark;
 import org.apache.commons.lang3.RandomStringUtils;
 
 /**
@@ -15,15 +15,21 @@ public class Main {
 
     int count = 5000000;
 
-    TelephoneBookEntry[] telephoneBookEntries = new TelephoneBookEntry[count];
+    TelephoneBookEntry[] entries = new TelephoneBookEntry[count];
 
     // Generate random persons
     for (int i = 0; i < count; i++) {
-      telephoneBookEntries[i] = new TelephoneBookEntry(i + "Name", RandomStringUtils.randomNumeric(10));
+      entries[i] =
+          new TelephoneBookEntry(i + "Name", RandomStringUtils.randomNumeric(10));
     }
 
-    // test java map
-    Benchmark<TelephoneBookEntry[]> mapBenchmark = new HashMapBenchmark().start(
-        telephoneBookEntries);
+    // java map
+    new HashMapBenchmark().start(entries);
+
+    // MongoDb
+    new MongoBenchmark().start(entries);
+
+    // Mdbm
+    //new MdbmBenchmark().start(entries);
   }
 }

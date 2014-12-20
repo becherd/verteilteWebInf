@@ -89,7 +89,7 @@ public abstract class Benchmark<T> {
    * Print the benchmark results
    */
   public void printResults() {
-    System.out.println("--- " + name + " ---");
+    System.out.println("---- " + name + " ----");
     System.out.println("Insert:  " + insertTime + " ms");
     System.out.println("Query:   " + queryTime + " ms");
     System.out.println("Delete:  " + deleteTime + " ms");
