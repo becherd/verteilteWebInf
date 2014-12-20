@@ -1,5 +1,7 @@
 package de.tum;
 
+import de.tum.benchmark.Benchmark;
+import de.tum.benchmark.HashMapBenchmark;
 import org.apache.commons.lang3.RandomStringUtils;
 
 /**
@@ -9,25 +11,19 @@ import org.apache.commons.lang3.RandomStringUtils;
  */
 public class Main {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
 
-    System.out.println("Hello World!");
+    int count = 5000000;
 
-    int count = 10000000;
-
-    Person[] persons = new Person[count];
+    TelephoneBookEntry[] telephoneBookEntries = new TelephoneBookEntry[count];
 
     // Generate random persons
     for (int i = 0; i < count; i++) {
-      persons[i] = new Person("Person" + i, RandomStringUtils.randomNumeric(10));
+      telephoneBookEntries[i] = new TelephoneBookEntry(i + "Name", RandomStringUtils.randomNumeric(10));
     }
 
     // test java map
-
-  }
-
-
-  private void testJavaMap(Person [] persons){
-
+    Benchmark<TelephoneBookEntry[]> mapBenchmark = new HashMapBenchmark().start(
+        telephoneBookEntries);
   }
 }

@@ -4,12 +4,12 @@ package de.tum;
  * A simple Person
  * @author Hannes Dorfmann
  */
-public class Person {
+public class TelephoneBookEntry {
 
   private String name;
   private String number;
 
-  public Person(String name, String number) {
+  public TelephoneBookEntry(String name, String number) {
     this.name = name;
     this.number = number;
   }
