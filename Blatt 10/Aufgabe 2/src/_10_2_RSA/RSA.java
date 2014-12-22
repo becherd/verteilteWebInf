@@ -53,7 +53,10 @@ public class RSA {
 		
 	}
 	
-	public BigInteger encode(BigInteger m){
+	public BigInteger encode(BigInteger m) throws Exception{
+		if(m.doubleValue() >= n.doubleValue() || m.doubleValue() < 0){
+			throw new Exception("Die Zahl muss zwischen 0 und " + (n.doubleValue() - 1) + " liegen!");
+		}
 		return m.modPow(e, n) ;
 	}
 	public BigInteger decode(BigInteger c){

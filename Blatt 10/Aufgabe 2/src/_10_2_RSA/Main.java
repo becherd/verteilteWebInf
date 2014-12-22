@@ -4,7 +4,7 @@ import java.math.BigInteger;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		BigInteger p = new BigInteger("5");
 		BigInteger q = new BigInteger("3");
 		RSA rsa = new RSA(p, q, new BigInteger("3"));
