@@ -56,26 +56,31 @@ public abstract class Benchmark<T> {
 
     // Benchmark setup
     long startTime = System.currentTimeMillis();
+    System.out.println(name+": setup");
     setup(items);
     setupTime = System.currentTimeMillis() - startTime;
 
     // Benchmark inserting
     startTime = System.currentTimeMillis();
+    System.out.println(name+": inserting");
     insert(items);
     insertTime = System.currentTimeMillis() - startTime;
 
     // Benchmark quering
     startTime = System.currentTimeMillis();
+    System.out.println(name+": quering");
     query(items);
     queryTime = System.currentTimeMillis() - startTime;
 
     // Benchmark deleting
     startTime = System.currentTimeMillis();
+    System.out.println(name+": deleting");
     delete(items);
     deleteTime = System.currentTimeMillis() - startTime;
 
     // Benchmarking cleanup
     startTime = System.currentTimeMillis();
+    System.out.println(name+": clean up");
     cleanUp(items);
     cleanUpTime = System.currentTimeMillis() - startTime;
 
