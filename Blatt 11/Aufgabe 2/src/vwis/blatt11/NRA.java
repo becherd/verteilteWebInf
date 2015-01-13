@@ -30,12 +30,8 @@ public class NRA {
 			left.open();
 			right.open();
 
-			// 2 HashMaps for random access
+			// Result Map
 			HashMap<String, Integer> iResultMap = new HashMap<String, Integer>();
-
-			// 2 ArrayLists that represent the order within the HashMaps
-			List<String> leftMapOrder = new ArrayList<String>();
-			List<String> rightMapOrder = new ArrayList<String>();
 
 			// Intermediate result list
 			TreeMap<Integer, String> iResults = new TreeMap<Integer, String>();
