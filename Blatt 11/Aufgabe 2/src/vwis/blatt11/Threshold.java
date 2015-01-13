@@ -28,11 +28,6 @@ public class Threshold {
 		HashMap<String, HashMap<Integer, Integer>> tablesMap = new HashMap<String, HashMap<Integer, Integer>>();
 
 		try {
-			//System.out.print(left.open());
-			//System.out.print(left.next().toString());
-
-			//System.out.println(Arrays.toString(left.open()));
-			//System.out.println(Arrays.toString(right.open()));
 
 			// Initiate iterators
 			left.open();
@@ -106,7 +101,7 @@ public class Threshold {
 					// Check if there are values below the threshold
 					if(key <= threshold) {
 						// numRows specifies top k
-						if(resultList.size() <= numRows) {
+						if(resultList.size() < numRows) {
 							resultList.put(key, value);
 						}
 					}
@@ -160,7 +155,7 @@ public class Threshold {
 			return;
 		}
 
-		int k = 2;
+		int k = 3;
 		Threshold th = new Threshold(kindergarten, mietspiegel, k);
 		Object[][] result = th.execute();
 
