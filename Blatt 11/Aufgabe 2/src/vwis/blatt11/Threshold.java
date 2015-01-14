@@ -24,9 +24,6 @@ public class Threshold {
 	 */
 	public Object[][] execute(){
 
-
-		HashMap<String, HashMap<Integer, Integer>> tablesMap = new HashMap<String, HashMap<Integer, Integer>>();
-
 		try {
 
 			// Initiate iterators

@@ -22,7 +22,6 @@ public class NRA {
 	 * @return Resulting tuple array
 	 */
 	public Object[][] execute(){
-		HashMap<String, HashMap<Integer, Integer>> tablesMap = new HashMap<String, HashMap<Integer, Integer>>();
 
 		try {
 
