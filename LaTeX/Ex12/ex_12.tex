@@ -23,6 +23,44 @@
 \begin{document}
 \maketitle
 
+\section*{Aufgabe 1}
+Impala: open-source, massively parallel processing (MPP) SQL-Query-Engine
+\begin{itemize}
+\item geringe Latenz: verteilte Architektur auf Daemon-Prozessen aufgebaut, die für Anfrageausführung zuständig sind
+\item hohe Nebenläufigkeit
+\item komplett neu geschriebenes System in C++/Java
+\item HDFS als darunterliegender Speichermanager optimal
+\item sehr schnell: \\
+single-user queries: bis zu 13-mal schneller als alternative Systeme; durchschnittlich 6.7-mal schneller\\
+multi-user queries: durchschnittlich bis zu 18xschneller
+
+\item läuft auf hunderten Rechnern in Hadoop-Cluster; unabhängig von darunterliegender Speicherarchitektur
+\item drei Services: Query Planner, Query Coordinator, Query Executor (alle Daemons können in allen Rollen auftreten)
+\item Datenlokalität: jeder Knoten akzeptiert Anfragen und führt sie aus; Synchronisierung parallel (keine RPCs; Push der wichtigen Informationen an alle Interessenten (Subscribers)
+\item unterstützt Standards: z.B. JDBC/ODBC, Authentikation über Kerberos/LDAP, SQL
+\end{itemize}
+
+\textbf{Frontend (Java)}
+\begin{itemize}
+\item SQL $ \rightarrow $ Query Plan: Parsing, semantische Analyse, Optimierung
+\item Query Planner: Ein-Rechner-System-Planung $ \rightarrow $ Parallelisierung (maximale Lokalität, minimaler Datentransfer): Broadcast- oder partitionierter Join; lokale Prä-Aggregation + Merge
+\end{itemize}
+
+\textbf{Backend (C++)}
+\begin{itemize}
+\item Codegenerierung zur Laufzeit (mit LLVM; für Code, der oft ausgeführt wird), Pipelining
+\item I/O mittels HDFS-Feature short-circuit local reads (lesen mit fast komplett Bandbreite)
+\item Speicherformate: meist Apache Parquet (hohe Kompression, hohe Effizienz): Encoding zur Laufzeit, Statistiken zur Optimierung
+\end{itemize}
+
+\textbf{Resource/Workload Management}
+\begin{itemize}
+\item Apache YARN: zentraler Ressourcen-Manager, volles Wissen über Lastverteilung
+\item eigene Implementierung: verteilte Kontrolle + Llama (für caching, Scheduling) + YARN
+\item Llama/YARN: alle Ressourcenanfragen an Llama; falls Ressourcen in Cache verfügbar, dann Zuteilung; ansonsten Weiterleitung zu YARN
+\end{itemize}
+
+
 \section*{Aufgabe 2}
 \begin{verbatim}
 SELECT ?actor WHERE
@@ -30,7 +68,19 @@ SELECT ?actor WHERE
   ?actor <directed> ?movie2.
 }
 \end{verbatim}
+bzw.
+\begin{verbatim}
+PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
+PREFIX dbpedia: <http://dbpedia.org/resource/>
+PREFIX dbpprop: <http://dbpedia.org/property/>
 
+SELECT ?actor ?name
+WHERE {
+?actor dbpedia-owl:occupation dbpedia:Actor.
+?actor dbpedia-owl:occupation dbpedia:Film_director.
+OPTIONAL {?actor dbpprop:name ?name.}
+} ORDER BY ?actor
+\end{verbatim}
 
 
 
