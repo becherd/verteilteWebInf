@@ -23,6 +23,17 @@
 \begin{document}
 \maketitle
 
+\section*{Aufgabe 1}
+\begin{itemize}
+\item Neu geschribene Engine in C++ und Java. Die meisten anderen Engines basieren auf Postgres.
+\item Benutzt Hadoop Standard Komponenten.
+\item Unterstützt Industriestandards wie  OBDC oder JBDC, sowie Authentifizierung über Kerberos oder LDAP.
+\item Spalten können mit "PARTITIONED" partitioniert werden und mit LOCATION kann der hdfs path angegeben werden.
+\item Als Dateiformat wird RCFile, Avro (binäres Format) und Parquet unterstützt. Weiters können Partitionen innerhalb einer Tabelle verschiedene Formate haben.
+\item Standart SQL SELECT Syntax (SQL-92, SQL-2003)
+
+\end{itemize}
+
 \section*{Aufgabe 2}
 \begin{verbatim}
 SELECT ?actor WHERE
