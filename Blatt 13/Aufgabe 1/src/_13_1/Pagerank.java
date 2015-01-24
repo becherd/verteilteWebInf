@@ -18,16 +18,16 @@ public class Pagerank {
 	double[][] P;
 	int size;
 	
-	public Pagerank() throws ClassNotFoundException, SQLException, IOException{
+	public Pagerank(String postgresql) throws ClassNotFoundException, SQLException, IOException{
 		//inits
 		Class.forName("org.postgresql.Driver");
 		this.ds = new PGSimpleDataSource();
-		ds.setUrl("jdbc:postgresql://127.0.0.1:5432/ubahn");
+		ds.setUrl(postgresql);
 		ds.setUser("postgres");
 		ds.setPassword("postgres");
 		this.conn = ds.getConnection();
 		
-		// loadData();
+		loadData();
 		
 		size = sizeHaltestellen();
 		P = new double[size][size];
@@ -197,7 +197,7 @@ public class Pagerank {
 		
 	public static void main(String[] args){
 		try {
-			Pagerank p1 = new Pagerank();
+			Pagerank p1 = new Pagerank("jdbc:postgresql://127.0.0.1:5432/ubahn");
 			
 			System.out.println("Start in Hauptbahnhof, Sendlinger Tor, Scheidplatz, Innsbrucker Ring oder Odeonsplatz:");
 			double[] w = p1.berechne(p1.getVerteilterVector());
