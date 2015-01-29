@@ -10,8 +10,7 @@ import org.apache.hadoop.mapred.Mapper;
 import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.Reporter;
 
-@SuppressWarnings("deprecation")
-public class DataParserMapper extends MapReduceBase
+@SuppressWarnings("deprecation") public class DataParserMapper extends MapReduceBase
     implements Mapper<LongWritable, Text, Text, Text> {
 
   private static final Pattern pattern = Pattern.compile("<([^>]+)>");

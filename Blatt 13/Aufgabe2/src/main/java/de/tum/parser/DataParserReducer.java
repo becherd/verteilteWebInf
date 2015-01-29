@@ -9,23 +9,23 @@ import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.Reducer;
 import org.apache.hadoop.mapred.Reporter;
 
-@SuppressWarnings("deprecation")
-public class DataParserReducer extends MapReduceBase implements Reducer<Text, Text, Text, Text> {
-    
-    public void reduce(Text key, Iterator<Text> values, OutputCollector<Text, Text> output, Reporter reporter) throws IOException {
-        String linksToPages = "";
+@SuppressWarnings("deprecation") public class DataParserReducer extends MapReduceBase
+    implements Reducer<Text, Text, Text, Text> {
 
-        boolean first = true;
-        while(values.hasNext()) {
-        	if(!first)
-        		linksToPages += ",";
-        	
-            linksToPages += values.next().toString();
-            
-            first = false;
-        }
-        
-        // output: < page, links to other pages(outgoing links) >
-        output.collect(key, new Text(linksToPages));
+  public void reduce(Text key, Iterator<Text> values, OutputCollector<Text, Text> output,
+      Reporter reporter) throws IOException {
+    String linksToPages = "";
+
+    boolean first = true;
+    while (values.hasNext()) {
+      if (!first) linksToPages += ",";
+
+      linksToPages += values.next().toString();
+
+      first = false;
     }
+
+    // output: < page, links to other pages(outgoing links) >
+    output.collect(key, new Text(linksToPages));
+  }
 }
