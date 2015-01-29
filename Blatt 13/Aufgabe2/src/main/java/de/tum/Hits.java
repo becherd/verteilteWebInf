@@ -1,10 +1,10 @@
 package de.tum;
 
-import de.tum.jobs.FromPagesMapper;
-import de.tum.jobs.FromPagesReducer;
+import de.tum.jobs.AuthRankMapper;
 import de.tum.jobs.CalculateMapper;
 import de.tum.jobs.CalculateReducer;
-import de.tum.jobs.AuthRankMapper;
+import de.tum.jobs.FromPagesMapper;
+import de.tum.jobs.FromPagesReducer;
 import de.tum.jobs.HubRankMapper;
 import de.tum.jobs.InitAuthHubMapper;
 import de.tum.jobs.InitAuthHubReducer;
@@ -14,6 +14,7 @@ import de.tum.parser.DataParserReducer;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
@@ -33,10 +34,11 @@ import org.apache.hadoop.mapred.TextOutputFormat;
    * @param args
    */
   public static void main(String[] args) throws Exception {
+
     Hits hits = new Hits();
 
     // get outgoing links
-    hits.runXmlParsing(args[0], "wiki/linkout");
+    hits.runParsing(args[0], "wiki/linkout");
 
     // get incoming links
     hits.getLinkIn("wiki/linkout", "wiki/linkin");
@@ -47,15 +49,18 @@ import org.apache.hadoop.mapred.TextOutputFormat;
     if (args.length == 2) iterations = Integer.parseInt(args[1]);
     int runs = 0;
     for (; runs < iterations; runs++) {
-      hits.runHITSCalculation("wiki/HITS/iter" + format.format(runs),
+      hits.runCalculation("wiki/HITS/iter" + format.format(runs),
           "wiki/HITS/iter" + format.format(runs + 1));
     }
 
     hits.runRankOrdering("wiki/HITS/iter" + format.format(runs), "wiki/HITS/result");
   }
 
-  public void runXmlParsing(String inputPath, String outputPath) throws IOException {
+  public void runParsing(String inputPath, String outputPath) throws IOException {
     JobConf conf = new JobConf(Hits.class);
+
+    // Delete folders
+    FileSystem.get(conf).delete(new Path("wiki"), true);
 
     // Input / Mapper
     FileInputFormat.setInputPaths(conf, new Path(inputPath));
@@ -110,7 +115,7 @@ import org.apache.hadoop.mapred.TextOutputFormat;
     JobClient.runJob(conf);
   }
 
-  private void runHITSCalculation(String inputPath, String outputPath) throws IOException {
+  private void runCalculation(String inputPath, String outputPath) throws IOException {
     JobConf conf = new JobConf(Hits.class);
 
     conf.setOutputKeyClass(Text.class);
