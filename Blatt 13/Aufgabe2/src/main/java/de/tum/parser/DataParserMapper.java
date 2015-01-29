@@ -14,7 +14,6 @@ import org.apache.hadoop.mapred.Reporter;
     implements Mapper<LongWritable, Text, Text, Text> {
 
   private static final Pattern pattern = Pattern.compile("<([^>]+)>");
-  private static final String replaceRegex = "<|>";
 
   public void map(LongWritable key, Text value, OutputCollector<Text, Text> output,
       Reporter reporter) throws IOException {
@@ -25,8 +24,12 @@ import org.apache.hadoop.mapred.Reporter;
     matcher.find();
     String linkToPage = matcher.group();
 
-    page = page.replaceAll(replaceRegex, "");
-    linkToPage.replaceAll(replaceRegex, "");
+    page = page.replace("<","");
+    page = page.replace(">","");
+
+    linkToPage = page.replace("<","");
+    linkToPage = page.replace(">","");
+
     output.collect(new Text(page), new Text(linkToPage));
   }
 }
